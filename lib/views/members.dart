@@ -3,7 +3,7 @@ import 'package:stacked/stacked.dart';
 import 'package:vaam_khanegi/viewmodels/aza_page_viewmodel.dart';
 import 'package:vaam_khanegi/views/menu_page.dart';
 
-class AzaPage extends StatelessWidget {
+class MembersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<AzaPageViewModel>.reactive(

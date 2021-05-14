@@ -12,8 +12,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  stacked: ^2.0.4
+  stacked: ^2.1.4
   get: ^4.1.4
+  get_it: ^6.0.0
+  http: ^0.13.3
 
 
  

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vaam_khanegi/views/azaa.dart';
+import 'package:vaam_khanegi/views/members.dart';
 
 class MenuPage extends StatefulWidget {
   @override
@@ -39,7 +39,7 @@ class MenuItems extends StatelessWidget {
                 color: Color(0xff014B26),
                 onPressed: () {
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => AzaPage()),
+                    MaterialPageRoute(builder: (context) => MembersPage()),
                   );
                 },
                 child: Text(
