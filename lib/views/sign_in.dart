@@ -106,9 +106,7 @@ class _SignInPageState extends State<SignInPage> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25)),
                       onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => MenuPage()),
-                        );
+                        model.signIn();
                       },
                       color: Color(0xff00A551),
                       child: Text(

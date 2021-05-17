@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:stacked/stacked.dart';
+import 'package:vaam_khanegi/service_locator.dart';
 import 'package:vaam_khanegi/viewmodels/sign_up_page_viewmodel.dart';
 import 'package:get/get.dart';
 import 'package:vaam_khanegi/views/menu_page.dart';
@@ -13,8 +14,8 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<SIgnUpPageViewModel>.reactive(
-        viewModelBuilder: () => SIgnUpPageViewModel(),
+    return ViewModelBuilder<SignUpPageViewModel>.reactive(
+        viewModelBuilder: () => getIt<SignUpPageViewModel>(),
         builder: (context, model, _) => Scaffold(
               body: SingleChildScrollView(
                 child: Center(
@@ -71,7 +72,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       Container(
                         width: 380,
                         child: TextField(
-                          obscureText: true,
                           decoration: InputDecoration(
                             hintText: 'ایمیل',
                             border: OutlineInputBorder(
@@ -95,7 +95,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                           ),
                           onChanged: (value) {
-                            model.setlastName(value);
+                            model.setpassword(value);
                           },
                         ),
                       ),
@@ -108,10 +108,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25)),
                             onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) => MenuPage()),
-                              );
+                              model.signUp();
                             },
                             color: Color(0xff00A551),
                             child: Text(

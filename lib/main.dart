@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:vaam_khanegi/service_locator.dart';
 import 'package:vaam_khanegi/views/members.dart';
 import 'package:vaam_khanegi/views/menu_page.dart';
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: SignInPage(),
     );

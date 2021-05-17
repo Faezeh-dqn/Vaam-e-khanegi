@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:stacked/stacked.dart';
-import 'package:vaam_khanegi/viewmodels/aza_page_viewmodel.dart';
+
+import 'package:vaam_khanegi/models/member.dart';
+import 'package:vaam_khanegi/service_locator.dart';
+import 'package:vaam_khanegi/viewmodels/members_page_viewmodel.dart';
+import 'package:vaam_khanegi/views/add_member_form.dart';
 import 'package:vaam_khanegi/views/menu_page.dart';
 
 class MembersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AzaPageViewModel>.reactive(
-      viewModelBuilder: () => AzaPageViewModel(),
+    return ViewModelBuilder<MembersPageViewModel>.reactive(
+      viewModelBuilder: () => getIt<MembersPageViewModel>(),
+      onModelReady: (model) => model.getMembers(),
       builder: (context, model, _) => Scaffold(
         body: Center(
           child: Column(
@@ -20,9 +26,7 @@ class MembersPage extends StatelessWidget {
                       iconSize: 32,
                       icon: Icon(Icons.arrow_back),
                       onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => MenuPage()),
-                        );
+                        Navigator.pop(context);
                       },
                     ),
                   ),
@@ -48,20 +52,71 @@ class MembersPage extends StatelessWidget {
               Expanded(
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
-                  itemCount: model.user.length,
-                  itemBuilder: (context, itemCount) {
+                  itemCount: model.members.length,
+                  itemBuilder: (context, index) {
                     return Column(
                       children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 270),
-                          child: Text(
-                            model.user[0],
-                            style: TextStyle(fontSize: 25),
-                          ),
-                        )
+                        MemberCard(
+                          member: model.members[index],
+                        ),
                       ],
                     );
                   },
+                ),
+              ),
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Get.to(AddMemberForm());
+          },
+          child: Icon(
+            Icons.add,
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      ),
+    );
+  }
+}
+
+class MemberCard extends StatelessWidget {
+  final Member member;
+  const MemberCard({@required this.member});
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.green[100],
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                '${member.name}  ${member.lastname}',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: Colors.green[300],
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.person,
+                  color: Colors.white,
                 ),
               ),
             ],

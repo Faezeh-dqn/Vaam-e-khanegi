@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:stacked/stacked.dart';
 
@@ -26,6 +27,12 @@ class SignInPageViewModel extends BaseViewModel {
     try {
       await authService.singIn(_email, _password);
       await Get.to(MenuPage());
-    } catch (e) {}
+    } catch (e) {
+      Get.snackbar(
+        'ورود موفقیت آمیز نبود',
+        e.toString(),
+        backgroundColor: Colors.white,
+      );
+    }
   }
 }

@@ -1,8 +1,12 @@
-import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-const String baseUrl = 'localhost:8000';
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+
+const String baseUrl = 'loan.shaghayeghschool.ir';
 
 class AuthService {
+  String authToken;
   Future<void> signUp(
     String firstName,
     String lastName,
@@ -12,13 +16,19 @@ class AuthService {
     try {
       Uri uri = Uri.http(baseUrl, '/api/register');
       Map<String, dynamic> data = {
-        'firstName': firstName,
+        'name': firstName,
         'lastName': lastName,
         'email': email,
         'password': password,
       };
-      await http.post(uri, body: data);
-    } catch (e) {}
+      print(data);
+      Response response = await http.post(uri, body: data);
+      if (response.statusCode != 200) {
+        throw UnknownException();
+      }
+    } on UnknownException {
+      rethrow;
+    }
   }
 
   Future<void> singIn(String email, String password) async {
@@ -28,7 +38,32 @@ class AuthService {
         'email': email,
         'password': password,
       };
-      await http.post(uri, body: data);
-    } catch (e) {}
+      Response response = await http.post(uri, body: data);
+      if (response.statusCode == 401) {
+        throw InvalidEmailOrPassword();
+      }
+      Map<String, dynamic> map = jsonDecode(response.body);
+      authToken = map['date']['token'];
+    } on InvalidEmailOrPassword {
+      rethrow;
+    } catch (e) {
+      throw UnknownException();
+    }
+  }
+}
+
+class InvalidEmailOrPassword implements Exception {
+  @override
+  String toString() {
+    // TODO: implement toString
+    return 'ایمیل یا پسورد اشتباه است';
+  }
+}
+
+class UnknownException implements Exception {
+  @override
+  String toString() {
+    // TODO: implement toString
+    return 'خطای غیر منتظره رخ داد';
   }
 }
