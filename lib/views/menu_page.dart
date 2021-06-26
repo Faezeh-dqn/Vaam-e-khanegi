@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:vaam_khanegi/views/aghsat_page.dart';
 import 'package:vaam_khanegi/views/members.dart';
+import 'package:vaam_khanegi/views/vaam.dart';
+import 'package:vaam_khanegi/views/varizi.dart';
 
 class MenuPage extends StatefulWidget {
   @override
@@ -63,7 +66,11 @@ class MenuItems extends StatelessWidget {
                       color: Colors.white,
                       fontWeight: FontWeight.w600),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => VariziPage()),
+                  );
+                },
               ),
             ),
           ],
@@ -79,7 +86,11 @@ class MenuItems extends StatelessWidget {
               width: 150,
               child: RaisedButton(
                 color: Color(0xff007C3D),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => VaamPage()),
+                  );
+                },
                 child: Text(
                   'وام ها',
                   style: TextStyle(
@@ -117,7 +128,11 @@ class MenuItems extends StatelessWidget {
               width: 150,
               child: RaisedButton(
                 color: Color(0xff00BE5E),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => AghsatPage()),
+                  );
+                },
                 child: Text(
                   'اقساط',
                   style: TextStyle(

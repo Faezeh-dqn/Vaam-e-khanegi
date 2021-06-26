@@ -68,6 +68,7 @@ class MembersPage extends StatelessWidget {
           ),
         ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.green,
           onPressed: () {
             Get.to(AddMemberForm());
           },
