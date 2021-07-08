@@ -47,7 +47,8 @@ class _VaamPageState extends State<VaamPage> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 RaisedButton(
-                                  color: Color(0xff00DA6B),
+                                  elevation: 0,
+                                  color: Color(0xffFF993A),
                                   onPressed: () {},
                                   child: Text('اخذ',
                                       style: PersianFonts.Vazir.copyWith(
@@ -59,7 +60,8 @@ class _VaamPageState extends State<VaamPage> {
                                   width: 5,
                                 ),
                                 RaisedButton(
-                                  color: Colors.green,
+                                  elevation: 0,
+                                  color: Colors.green.shade400,
                                   onPressed: () {
                                     setState(
                                       () {
@@ -87,23 +89,35 @@ class _VaamPageState extends State<VaamPage> {
                                                     children: [
                                                       DialogItems(
                                                         onvan:
-                                                            'مقدار وام :${model.meghdarEVaam}',
+                                                            'عنوان وام :${model.name}',
                                                       ),
                                                       DialogItems(
                                                         onvan:
-                                                            'تاریخ اعطای وام :${model.tarikheEtayeVaam}',
+                                                            'نوع وام :${model.type}',
                                                       ),
                                                       DialogItems(
                                                         onvan:
-                                                            'تاریخ اتمام :${model.tarikheEtmam}',
+                                                            'مقدار وام :${model.amount.toString()}',
                                                       ),
                                                       DialogItems(
                                                         onvan:
-                                                            'تعداد اقساط :${model.tedadeAghsat}',
+                                                            ' حداقل سپرده لازم :${model.minDepositRequierd} تومان',
                                                       ),
                                                       DialogItems(
                                                         onvan:
-                                                            'سر رسید قسط :${model.sarResideVaam}',
+                                                            'تاریخ شروع پرداخت :${model.restDays}',
+                                                      ),
+                                                      DialogItems(
+                                                        onvan:
+                                                            'مدت پرداخت :${model.installmentsDeadLineDays.toString()} روز',
+                                                      ),
+                                                      DialogItems(
+                                                        onvan:
+                                                            'تعداد اقساط :${model.numberOfInstallments}',
+                                                      ),
+                                                      DialogItems(
+                                                        onvan:
+                                                            'بهره وام:${model.interestRate}',
                                                       ),
                                                       SimpleDialogOption(
                                                         onPressed: () {
@@ -152,7 +166,7 @@ class _VaamPageState extends State<VaamPage> {
                                 Padding(
                                   padding: EdgeInsets.only(right: 10),
                                   child: Text(
-                                    model.onvaneVaam,
+                                    model.name,
                                     style: TextStyle(fontSize: 21.5),
                                   ),
                                 ),
@@ -174,7 +188,7 @@ class _VaamPageState extends State<VaamPage> {
                   height: 50,
                   width: 150,
                   child: RaisedButton(
-                    color: Colors.green,
+                    color: Color(0xffFF993A),
                     onPressed: () {
                       Get.to(() => MenuPage());
                     },

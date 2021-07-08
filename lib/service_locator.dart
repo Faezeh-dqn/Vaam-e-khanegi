@@ -6,6 +6,7 @@ import 'package:vaam_khanegi/viewmodels/aghsat_page_viewmodel.dart';
 import 'package:vaam_khanegi/viewmodels/members_page_viewmodel.dart';
 import 'package:vaam_khanegi/viewmodels/sign_up_page_viewmodel.dart';
 import 'package:vaam_khanegi/viewmodels/vaam_page_viewModel.dart';
+import 'package:vaam_khanegi/viewmodels/varizi_page_viewModel.dart';
 import 'package:vaam_khanegi/views/add_member_form.dart';
 import 'package:vaam_khanegi/views/members.dart';
 
@@ -20,6 +21,10 @@ setUpGetIt() {
     MemberService(
       authService: getIt<AuthService>(),
     ),
+  );
+
+  getIt.registerSingleton<VariziPageViewModel>(
+    VariziPageViewModel(),
   );
 
   getIt.registerFactory(

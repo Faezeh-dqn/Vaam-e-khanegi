@@ -1,20 +1,22 @@
 class Vaam {
-  String onvaneVaam;
-  String meghdarEVaam;
-  String tarikheEtayeVaam;
-  String tarikheEtmam;
-  int tedadeAghsat;
-  String girandeVaam;
-  String sarresidVaam;
-  String mahane;
+  String name;
+  String type;
+  int amount;
+  int minDepositRequierd;
+  int numberOfInstallments;
+  int restDays;
+  double interestRate;
+  int installmentsDeadLineDays;
+  bool isShowable;
 
   Vaam(
-      {this.girandeVaam,
-      this.meghdarEVaam,
-      this.tarikheEtayeVaam,
-      this.tarikheEtmam,
-      this.tedadeAghsat,
-      this.onvaneVaam,
-      this.sarresidVaam,
-      this.mahane});
+      {this.installmentsDeadLineDays,
+      this.amount,
+      this.restDays,
+      this.interestRate,
+      this.numberOfInstallments,
+      this.name,
+      this.isShowable,
+      this.type,
+      this.minDepositRequierd});
 }

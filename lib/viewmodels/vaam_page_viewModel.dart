@@ -1,19 +1,23 @@
 import 'package:stacked/stacked.dart';
 
 class VaamPageViewModel extends BaseViewModel {
-  String _onvaneVaam = 'وام 3 میلیونی فروردین';
-  String _tarikheEtayeVaam = 'شانزدهم فروردین';
-  String _meghdarEVaam = '3 میلیون';
-  String _tarikheEtmam = 'یازدهم اسفند';
-  String _tedadeAghsat = '10 قسط';
-  String _sarResideVaam = 'یازدهم هرماه';
-  String _mahane = "300 هزار تومان";
+  String _name = 'وام 3 میلیونی فروردین';
+  String _type = 'اضطراری';
+  int _minDepositRequierd = 100;
+  int _amount = 3;
+  int _restDays = 10;
+  int _numberOfInstallments = 10;
+  double _interestRate = 0.02;
+  int _installmentsDeadLineDays = 365;
+  bool _isShowable = true;
 
-  String get onvaneVaam => _onvaneVaam;
-  String get tarikheEtayeVaam => _tarikheEtayeVaam;
-  String get meghdarEVaam => _meghdarEVaam;
-  String get tarikheEtmam => _tarikheEtmam;
-  String get tedadeAghsat => _tedadeAghsat;
-  String get sarResideVaam => _sarResideVaam;
-  String get mahane => _mahane;
+  String get name => _name;
+  String get type => _type;
+  int get minDepositRequierd => _minDepositRequierd;
+  int get amount => _amount;
+  int get restDays => _restDays;
+  int get numberOfInstallments => _numberOfInstallments;
+  double get interestRate => _interestRate;
+  int get installmentsDeadLineDays => _installmentsDeadLineDays;
+  bool get isShowable => _isShowable;
 }

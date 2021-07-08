@@ -1,188 +1,123 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:vaam_khanegi/views/aghsat_page.dart';
 import 'package:vaam_khanegi/views/members.dart';
 import 'package:vaam_khanegi/views/vaam.dart';
 import 'package:vaam_khanegi/views/varizi.dart';
 
-class MenuPage extends StatefulWidget {
-  @override
-  _MenuPageState createState() => _MenuPageState();
-}
-
-class _MenuPageState extends State<MenuPage> {
+class MenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: MenuItems(),
-      ),
-    );
-  }
-}
-
-class MenuItems extends StatelessWidget {
-  const MenuItems({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 50,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        child: Column(
           children: [
+            SizedBox(
+              height: 90,
+            ),
+            Text(
+              'صفحه اصلی',
+              style: TextStyle(fontSize: 40, fontWeight: FontWeight.w700),
+            ),
+            SizedBox(
+              height: 50,
+            ),
             Container(
-              height: 150,
-              width: 150,
-              child: RaisedButton(
-                color: Color(0xff014B26),
+              color: Color(0xffFF993A),
+              width: 350,
+              height: 65,
+              child: TextButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => MembersPage()),
-                  );
+                  Get.to(() => VaamPage());
+                },
+                child: Text(
+                  'وام',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              color: Color(0xff69CA2E),
+              width: 350,
+              height: 65,
+              child: TextButton(
+                onPressed: () {},
+                child: Text(
+                  'قسط',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              color: Colors.amber,
+              width: 350,
+              height: 65,
+              child: TextButton(
+                onPressed: () {},
+                child: Text(
+                  'برداشت ها',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              color: Color(0xff4221C6),
+              width: 350,
+              height: 65,
+              child: TextButton(
+                onPressed: () {
+                  Get.to(() => VariziPage());
+                },
+                child: Text(
+                  'واریزی',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 29,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              color: Color(0xffBF0A2A),
+              width: 350,
+              height: 65,
+              child: TextButton(
+                onPressed: () {
+                  Get.to(() => MembersPage());
                 },
                 child: Text(
                   'اعضا',
                   style: TextStyle(
-                      fontSize: 30,
                       color: Colors.white,
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
-            ),
-            Container(
-              height: 150,
-              width: 150,
-              child: RaisedButton(
-                color: Color(0xff006B35),
-                child: Text(
-                  'واریز ها',
-                  style: TextStyle(
                       fontSize: 30,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600),
+                      fontWeight: FontWeight.bold),
                 ),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => VariziPage()),
-                  );
-                },
               ),
             ),
           ],
         ),
-        SizedBox(
-          height: 30,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Container(
-              height: 150,
-              width: 150,
-              child: RaisedButton(
-                color: Color(0xff007C3D),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => VaamPage()),
-                  );
-                },
-                child: Text(
-                  'وام ها',
-                  style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
-            ),
-            Container(
-              height: 150,
-              width: 150,
-              child: RaisedButton(
-                color: Color(0xff009A4C),
-                child: Text(
-                  'برداشت ها',
-                  style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600),
-                ),
-                onPressed: () {},
-              ),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 30,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Container(
-              height: 150,
-              width: 150,
-              child: RaisedButton(
-                color: Color(0xff00BE5E),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => AghsatPage()),
-                  );
-                },
-                child: Text(
-                  'اقساط',
-                  style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
-            ),
-            Container(
-              height: 150,
-              width: 150,
-              child: RaisedButton(
-                color: Color(0xff00DA6B),
-                child: Text(
-                  'درآمد ها',
-                  style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600),
-                ),
-                onPressed: () {},
-              ),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 30,
-        ),
-        Padding(
-          padding: EdgeInsets.only(right: 197),
-          child: Container(
-            height: 150,
-            width: 150,
-            child: RaisedButton(
-              color: Color(0xff27FD90),
-              onPressed: () {},
-              child: Text(
-                '''وام های  
-تقاضا
-شده ''',
-                style: TextStyle(
-                    fontSize: 27,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600),
-              ),
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
