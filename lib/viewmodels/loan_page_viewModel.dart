@@ -6,6 +6,7 @@ class LoanPageViewModel extends BaseViewModel {
   int _joinedMembers;
   List<Loan> retrivedLoans = [
     Loan(
+        id: DateTime.now().microsecondsSinceEpoch.toString(),
         amount: 3,
         description:
             'مبلغ هر قسط 375000 تومان می باشد و در 8 ماه دریافت می گردد.',
@@ -13,6 +14,7 @@ class LoanPageViewModel extends BaseViewModel {
         requierdMembers: 10,
         joinedMembers: ['علی', 'حسین ', 'سیما']),
     Loan(
+        id: DateTime.now().microsecondsSinceEpoch.toString(),
         amount: 5,
         description:
             'مبلغ هر قسط 417000 تومان می باشد و در 12 ماه دریافت می گردد.',

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:stacked/stacked.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:vaam_khanegi/models/loan.dart';
 import 'package:vaam_khanegi/viewmodels/loan_page_viewModel.dart';
 import 'package:persian_fonts/persian_fonts.dart';
 import 'package:vaam_khanegi/views/menu_page.dart';
@@ -270,8 +271,8 @@ class _LoanPageState extends State<LoanPage> {
               onPressed: () async {
                 model.seteJoinedMembers(
                     model.retrivedLoans[index].joinedMembers.length++);
-                await Navigator.pop(context);
-                await showTopSnackBar(
+                Navigator.pop(context);
+                showTopSnackBar(
                   context,
                   CustomSnackBar.success(
                     message: 'عضویت شما ثبت شد ',

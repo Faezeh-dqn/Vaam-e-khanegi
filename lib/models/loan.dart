@@ -7,18 +7,19 @@ class Loan {
   String name;
   String description;
   int amount;
-  List<String> joinedMembers;
   int requierdMembers;
+  List<String> joinedMembers;
   DateTime lotteryDate;
-  List<String> winnerInOrder;
+  List<String> winnersInOrder;
 
-  Loan(
-      {@required this.amount,
-      @required this.description,
-      @required this.name,
-      @required this.requierdMembers,
-      this.id,
-      this.joinedMembers,
-      this.lotteryDate,
-      this.winnerInOrder});
+  Loan({
+    @required this.amount,
+    @required this.description,
+    @required this.name,
+    @required this.requierdMembers,
+    @required this.id,
+    @required this.joinedMembers,
+    this.lotteryDate,
+    this.winnersInOrder,
+  });
 }

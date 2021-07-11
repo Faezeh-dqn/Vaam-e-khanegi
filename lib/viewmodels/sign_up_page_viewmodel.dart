@@ -43,6 +43,7 @@ class SignUpViewModel extends BaseViewModel {
         firstName: _firstName,
         lastName: _lastName,
         email: _email,
+        role: 'member',
       );
       await firestoreService.createUser(user);
       await Get.off(MenuPage());
