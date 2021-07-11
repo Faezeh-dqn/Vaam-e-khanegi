@@ -10,7 +10,7 @@ import 'package:vaam_khanegi/viewmodels/member_page_viewmodel.dart';
 
 import 'package:vaam_khanegi/viewmodels/sign_up_page_viewmodel.dart';
 import 'package:vaam_khanegi/viewmodels/loan_page_viewModel.dart';
-import 'package:vaam_khanegi/viewmodels/varizi_page_viewModel.dart';
+import 'package:vaam_khanegi/viewmodels/deposit_page_viewModel.dart';
 import 'package:vaam_khanegi/viewmodels/withdraw_page_viewmodel.dart';
 
 import 'viewmodels/sign_in_page_viewmodel.dart';
@@ -43,8 +43,8 @@ setUpGetIt() {
     ),
   );
 
-  getIt.registerSingleton<VariziPageViewModel>(
-    VariziPageViewModel(),
+  getIt.registerSingleton<DepositPageViewModel>(
+    DepositPageViewModel(),
   );
 
   getIt.registerFactory(
@@ -58,7 +58,7 @@ setUpGetIt() {
   );
 
   getIt.registerFactory(
-    () => MemberPageViewModel(),
+    () => MemberPageViewModel(firestoreService: getIt<FirestoreService>()),
   );
   getIt.registerFactory(
     () => WithdrawPageViewModel(),

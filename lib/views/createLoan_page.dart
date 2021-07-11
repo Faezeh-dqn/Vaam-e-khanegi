@@ -47,7 +47,7 @@ class _CreateLoanPageState extends State<CreateLoanPage> {
                             expansionCallback: (int index, bool isExpanded) {},
                             children: [
                               ExpansionPanel(
-                                isExpanded: false,
+                                isExpanded: true,
                                 backgroundColor: Colors.grey.shade200,
                                 headerBuilder:
                                     (BuildContext context, bool isExpanded) {
@@ -97,6 +97,7 @@ class _CreateLoanPageState extends State<CreateLoanPage> {
                             height: 50,
                             width: 150,
                             child: RaisedButton(
+                              elevation: 0,
                               color: Color(0xffFF3AEB),
                               onPressed: () {
                                 Get.to(() => MenuPage());
@@ -145,7 +146,9 @@ class _CreateLoanPageState extends State<CreateLoanPage> {
                                                   BorderRadius.circular(10),
                                             ),
                                           ),
-                                          onChanged: (value) {},
+                                          onChanged: (value) {
+                                            model.setName(value);
+                                          },
                                         ),
                                       ),
                                       SizedBox(
@@ -163,7 +166,9 @@ class _CreateLoanPageState extends State<CreateLoanPage> {
                                                   BorderRadius.circular(10),
                                             ),
                                           ),
-                                          onChanged: (value) {},
+                                          onChanged: (value) {
+                                            model.setAmount(value);
+                                          },
                                         ),
                                       ),
                                       SizedBox(
@@ -181,7 +186,9 @@ class _CreateLoanPageState extends State<CreateLoanPage> {
                                                   BorderRadius.circular(10),
                                             ),
                                           ),
-                                          onChanged: (value) {},
+                                          onChanged: (value) {
+                                            model.setInstallments(value);
+                                          },
                                         ),
                                       ),
                                       SizedBox(
@@ -199,7 +206,9 @@ class _CreateLoanPageState extends State<CreateLoanPage> {
                                                   BorderRadius.circular(10),
                                             ),
                                           ),
-                                          onChanged: (value) {},
+                                          onChanged: (value) {
+                                            model.setRequierdMembers(value);
+                                          },
                                         ),
                                       ),
                                       SizedBox(
@@ -209,6 +218,7 @@ class _CreateLoanPageState extends State<CreateLoanPage> {
                                         height: 50,
                                         width: 150,
                                         child: RaisedButton(
+                                          elevation: 0,
                                           color: Color(0xffFF3AEB),
                                           onPressed: () {
                                             Get.to(() => MenuPage());

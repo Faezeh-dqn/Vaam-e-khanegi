@@ -11,6 +11,7 @@ class MemberPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<MemberPageViewModel>.reactive(
         viewModelBuilder: () => getIt<MemberPageViewModel>(),
+        onModelReady: (model) => model.getMembers(),
         builder: (context, model, child) => Scaffold(
               body: Center(
                 child: Column(
@@ -35,17 +36,30 @@ class MemberPage extends StatelessWidget {
                     ),
                     Expanded(
                       child: ListView.builder(
-                          itemCount: model.members.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: EdgeInsets.only(left: 330),
-                              child: Text(
-                                model.members[index],
+                        itemCount: model.members.length,
+                        itemBuilder: (context, index) {
+                          return Row(
+                            children: [
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Text(
+                                model.members[index].lastName,
                                 style: TextStyle(
                                     fontSize: 21, fontWeight: FontWeight.bold),
                               ),
-                            );
-                          }),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Text(
+                                model.members[index].firstName,
+                                style: TextStyle(
+                                    fontSize: 21, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(

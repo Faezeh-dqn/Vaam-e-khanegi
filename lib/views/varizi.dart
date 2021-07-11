@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stacked/stacked.dart';
-import 'package:vaam_khanegi/viewmodels/varizi_page_viewModel.dart';
+import 'package:vaam_khanegi/viewmodels/deposit_page_viewModel.dart';
 import 'package:vaam_khanegi/views/menu_page.dart';
 import 'package:vaam_khanegi/views/loan.dart';
 
@@ -15,8 +15,8 @@ class VariziPage extends StatefulWidget {
 class _VariziPageState extends State<VariziPage> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<VariziPageViewModel>.reactive(
-        viewModelBuilder: () => getIt<VariziPageViewModel>(),
+    return ViewModelBuilder<DepositPageViewModel>.reactive(
+        viewModelBuilder: () => getIt<DepositPageViewModel>(),
         builder: (context, model, child) => Scaffold(
               body: Center(
                 child: Column(
@@ -77,14 +77,11 @@ class _VariziPageState extends State<VariziPage> {
                                                 ),
                                               ),
                                               children: <Widget>[
-                                                Padding(
-                                                  padding:
-                                                      EdgeInsets.only(left: 15),
-                                                  child: Text(
-                                                    model.description,
-                                                    style:
-                                                        TextStyle(fontSize: 20),
-                                                  ),
+                                                Text(
+                                                  model.deposits[index]
+                                                      .description,
+                                                  style:
+                                                      TextStyle(fontSize: 20),
                                                 )
                                               ],
                                             );
@@ -93,9 +90,9 @@ class _VariziPageState extends State<VariziPage> {
                                   },
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(left: 50),
+                                  padding: EdgeInsets.only(left: 10),
                                   child: Text(
-                                    ' مبلغ واریزی :${model.amount} تومان',
+                                    ' مبلغ واریزی :${model.deposits[index].amount} تومان',
                                     style: TextStyle(fontSize: 24),
                                   ),
                                 ),
@@ -114,6 +111,7 @@ class _VariziPageState extends State<VariziPage> {
                             height: 50,
                             width: 150,
                             child: RaisedButton(
+                              elevation: 0,
                               color: Color(0xff4221C6),
                               onPressed: () {
                                 Get.to(() => MenuPage());
@@ -134,9 +132,83 @@ class _VariziPageState extends State<VariziPage> {
                             height: 50,
                             width: 150,
                             child: RaisedButton(
-                              color: Colors.green.shade600,
+                              elevation: 0,
+                              color: Colors.blue.shade600,
                               onPressed: () {
-                                Get.to(() => MenuPage());
+                                showModalBottomSheet(
+                                  context: context,
+                                  backgroundColor: Colors.blue.shade100,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20),
+                                    ),
+                                  ),
+                                  builder: (context) => Container(
+                                    height: 500,
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 30,
+                                        ),
+                                        Container(
+                                          width: 300,
+                                          height: 50,
+                                          child: TextField(
+                                            obscureText: true,
+                                            decoration: InputDecoration(
+                                              hintText: 'مبلغ واریزی',
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                            ),
+                                            onChanged: (value) {},
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                        Container(
+                                          width: 300,
+                                          height: 50,
+                                          child: TextField(
+                                            obscureText: true,
+                                            decoration: InputDecoration(
+                                              hintText: 'توضیحات',
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                            ),
+                                            onChanged: (value) {},
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 40,
+                                        ),
+                                        Container(
+                                          height: 50,
+                                          width: 150,
+                                          child: RaisedButton(
+                                            elevation: 0,
+                                            color: Colors.blue.shade600,
+                                            onPressed: () {
+                                              Get.to(() => MenuPage());
+                                            },
+                                            child: Text(
+                                              'ثبت واریز',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
                               },
                               child: Text(
                                 'واریزی جدید',

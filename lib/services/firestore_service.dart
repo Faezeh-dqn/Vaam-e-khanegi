@@ -15,4 +15,16 @@ class FirestoreService {
         .doc(currentUserId)
         .set(user.toMap());
   }
+
+  Future getMembers() async {
+    List users = [];
+    QuerySnapshot querySnapshot =
+        await fireStore.collection(userCollection).get();
+
+    querySnapshot.docs.forEach((snapshot) {
+      User user = User.fromMap(snapshot.data());
+      users.add(user);
+    });
+    return users;
+  }
 }
