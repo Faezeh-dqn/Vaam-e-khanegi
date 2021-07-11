@@ -14,8 +14,8 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<SignInPageViewModel>.reactive(
-      viewModelBuilder: () => getIt<SignInPageViewModel>(),
+    return ViewModelBuilder<SignInViewModel>.reactive(
+      viewModelBuilder: () => getIt<SignInViewModel>(),
       builder: (context, model, _) => Scaffold(
         body: SingleChildScrollView(
           child: Center(
@@ -48,7 +48,7 @@ class _SignInPageState extends State<SignInPage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    onChanged: (value) => model.setemail(value),
+                    onChanged: (value) => model.setEmail(value),
                   ),
                 ),
                 SizedBox(
@@ -64,7 +64,7 @@ class _SignInPageState extends State<SignInPage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    onChanged: (value) => model.setpassword(value),
+                    onChanged: (value) => model.setPassword(value),
                   ),
                 ),
                 RaisedButton(

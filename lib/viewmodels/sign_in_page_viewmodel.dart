@@ -1,38 +1,33 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
+
 import 'package:stacked/stacked.dart';
+import 'package:vaam_khanegi/services/authentication_service.dart';
+import 'package:vaam_khanegi/views/menu_page.dart';
 
-import 'package:vaam_khanegi/services/auth_service.dart';
+class SignInViewModel extends BaseViewModel {
+  final AuthenticationService authenticationService;
 
-import '../views/menu_page.dart';
+  SignInViewModel({@required this.authenticationService});
 
-class SignInPageViewModel extends BaseViewModel {
-  final AuthService authService;
-  String _password;
-  String _email;
-  SignInPageViewModel({@required this.authService});
+  String _email = '';
+  String _password = '';
 
-  setpassword(String password) {
-    _password = password;
-    notifyListeners();
+  setEmail(String email) {
+    _email = email;
   }
 
-  setemail(String email) {
-    _email = email;
-    notifyListeners();
+  setPassword(String password) {
+    _password = password;
   }
 
   signIn() async {
     try {
-      await authService.singIn(_email, _password);
-      await Get.to(MenuPage());
-    } catch (e) {
-      Get.snackbar(
-        'ورود موفقیت آمیز نبود',
-        e.toString(),
-        backgroundColor: Colors.white,
-      );
+      await authenticationService.signIn(email: _email, password: _password);
+      await Get.off(MenuPage());
+    } on AuthException catch (e) {
+      Get.snackbar('Couldnt Sing in', e.message, backgroundColor: Colors.white);
     }
   }
 }

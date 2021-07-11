@@ -1,49 +1,54 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:stacked/stacked.dart';
-
 import 'package:vaam_khanegi/models/user.dart';
-import 'package:vaam_khanegi/services/auth_service.dart';
-import 'package:vaam_khanegi/views/sign_in.dart';
+import 'package:vaam_khanegi/services/authentication_service.dart';
+import 'package:vaam_khanegi/services/firestore_service.dart';
+import 'package:vaam_khanegi/views/menu_page.dart';
 
-class SignUpPageViewModel extends BaseViewModel {
-  final AuthService authService;
-  String _name;
-  String _email;
-  String _lastName;
-  String _password;
-  SignUpPageViewModel({@required this.authService});
-  setname(String name) {
-    _name = name;
-    notifyListeners();
+class SignUpViewModel extends BaseViewModel {
+  final AuthenticationService authenticationService;
+  final FirestoreService firestoreService;
+
+  SignUpViewModel(
+      {@required this.authenticationService, @required this.firestoreService});
+
+  String _firstName = '';
+  String _lastName = '';
+  String _email = '';
+  String _password = '';
+
+  setFirstName(String firstName) {
+    _firstName = firstName;
   }
 
-  setlastName(String lastName) {
+  setLastName(String lastName) {
     _lastName = lastName;
-    notifyListeners();
   }
 
-  setemail(String email) {
+  setEmail(String email) {
     _email = email;
-    notifyListeners();
   }
 
-  setpassword(String password) {
+  setPassword(String password) {
     _password = password;
-    notifyListeners();
   }
 
   signUp() async {
-    // try {
-    await authService.signUp(_name, _lastName, _email, _password);
-    await Get.off(SignInPage());
-    // } catch (e) {
-    // Get.snackbar(
-    //   'ورود موفقیت آمیز نبود',
-    //   e.toString(),
-    //   backgroundColor: Colors.white,
-    // );
-    // }
+    try {
+      await authenticationService.signUp(email: _email, password: _password);
+      User user = User(
+        firstName: _firstName,
+        lastName: _lastName,
+        email: _email,
+        image: '',
+      );
+      await firestoreService.createUser(user);
+      await Get.off(MenuPage());
+    } on AuthException catch (e) {
+      Get.snackbar('Couldnt Sing up', e.message, backgroundColor: Colors.white);
+    }
   }
 }

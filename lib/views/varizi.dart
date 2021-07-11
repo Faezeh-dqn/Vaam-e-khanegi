@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:stacked/stacked.dart';
 import 'package:vaam_khanegi/viewmodels/varizi_page_viewModel.dart';
 import 'package:vaam_khanegi/views/menu_page.dart';
-import 'package:vaam_khanegi/views/vaam.dart';
+import 'package:vaam_khanegi/views/loan.dart';
 
 import '../service_locator.dart';
 

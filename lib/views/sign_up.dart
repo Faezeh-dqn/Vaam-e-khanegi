@@ -14,8 +14,8 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<SignUpPageViewModel>.reactive(
-        viewModelBuilder: () => getIt<SignUpPageViewModel>(),
+    return ViewModelBuilder<SignUpViewModel>.reactive(
+        viewModelBuilder: () => getIt<SignUpViewModel>(),
         builder: (context, model, _) => Scaffold(
               body: SingleChildScrollView(
                 child: Center(
@@ -48,7 +48,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          onChanged: (value) => model.setname(value),
+                          onChanged: (value) => model.setFirstName(value),
                         ),
                       ),
                       SizedBox(
@@ -63,7 +63,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          onChanged: (value) => model.setlastName(value),
+                          onChanged: (value) => model.setLastName(value),
                         ),
                       ),
                       SizedBox(
@@ -78,7 +78,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          onChanged: (value) => model.setemail(value),
+                          onChanged: (value) => model.setEmail(value),
                         ),
                       ),
                       SizedBox(
@@ -95,7 +95,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                           ),
                           onChanged: (value) {
-                            model.setpassword(value);
+                            model.setPassword(value);
                           },
                         ),
                       ),

@@ -18,6 +18,9 @@ dependencies:
   http: ^0.13.3
   intl: ^0.17.0
   persian_fonts: ^1.0.3
+  firebase_core: ^1.0.3
+  firebase_auth: ^1.1.0
+  cloud_firestore: ^1.0.5
 
 
  
