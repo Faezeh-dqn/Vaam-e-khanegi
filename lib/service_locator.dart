@@ -3,17 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:vaam_khanegi/services/authentication_service.dart';
 import 'package:vaam_khanegi/services/firestore_service.dart';
-
-import 'package:vaam_khanegi/viewmodels/aghsat_page_viewmodel.dart';
 import 'package:vaam_khanegi/viewmodels/createLoan_page_viewmodel.dart';
+import 'package:vaam_khanegi/viewmodels/installments_page_viewmodel.dart';
 import 'package:vaam_khanegi/viewmodels/member_page_viewmodel.dart';
-
 import 'package:vaam_khanegi/viewmodels/sign_up_page_viewmodel.dart';
 import 'package:vaam_khanegi/viewmodels/loan_page_viewModel.dart';
 import 'package:vaam_khanegi/viewmodels/deposit_page_viewModel.dart';
 import 'package:vaam_khanegi/viewmodels/withdraw_page_viewmodel.dart';
-
-import 'viewmodels/sign_in_page_viewmodel.dart';
 import 'viewmodels/sign_in_page_viewmodel.dart';
 
 GetIt getIt = GetIt.instance;
@@ -46,15 +42,15 @@ setUpGetIt() {
   getIt.registerSingleton<DepositPageViewModel>(
     DepositPageViewModel(),
   );
+  getIt.registerFactory(
+    () => InstallmentPageViewModel(firestoreService: getIt<FirestoreService>()),
+  );
 
   getIt.registerFactory(
-    () => LoanPageViewModel(),
+    () => LoanPageViewModel(firestoreService: getIt<FirestoreService>()),
   );
   getIt.registerFactory(
-    () => CreateLoanPageViewModel(),
-  );
-  getIt.registerFactory(
-    () => AghsatPageViewModel(),
+    () => CreateLoanPageViewModel(firestoreService: getIt<FirestoreService>()),
   );
 
   getIt.registerFactory(

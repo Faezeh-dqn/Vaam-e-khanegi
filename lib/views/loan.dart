@@ -19,6 +19,7 @@ class _LoanPageState extends State<LoanPage> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<LoanPageViewModel>.reactive(
       viewModelBuilder: () => getIt<LoanPageViewModel>(),
+      onModelReady: (model) => model.getLoansFromDB(),
       builder: (context, model, _) => Scaffold(
         body: Center(
           child: Stack(

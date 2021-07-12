@@ -5,6 +5,12 @@ class Withdraw {
   String id;
   int amount;
   DateTime date;
+  String name;
 
-  Withdraw({@required this.amount, this.date, this.id, this.loanId});
+  Withdraw(
+      {@required this.amount,
+      this.date,
+      this.id,
+      this.loanId,
+      @required this.name});
 }

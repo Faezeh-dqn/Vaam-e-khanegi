@@ -1,27 +1,20 @@
+import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 import 'package:vaam_khanegi/models/loan.dart';
+import 'package:vaam_khanegi/services/firestore_service.dart';
 
 class LoanPageViewModel extends BaseViewModel {
   bool _active = false;
   int _joinedMembers;
-  List<Loan> retrivedLoans = [
-    Loan(
-        id: DateTime.now().microsecondsSinceEpoch.toString(),
-        amount: 3,
-        description:
-            'مبلغ هر قسط 375000 تومان می باشد و در 8 ماه دریافت می گردد.',
-        name: 'وام 3 میلیون تومانی',
-        requierdMembers: 10,
-        joinedMembers: ['علی', 'حسین ', 'سیما']),
-    Loan(
-        id: DateTime.now().microsecondsSinceEpoch.toString(),
-        amount: 5,
-        description:
-            'مبلغ هر قسط 417000 تومان می باشد و در 12 ماه دریافت می گردد.',
-        name: 'وام 3 میلیون تومانی',
-        requierdMembers: 12,
-        joinedMembers: ['سیمین', 'سوسن ', 'رضا'])
-  ];
+  List<Loan> retrivedLoans = [];
+  FirestoreService firestoreService;
+  LoanPageViewModel({@required this.firestoreService});
+
+  Future getLoansFromDB() async {
+    setBusy(true);
+    retrivedLoans = await firestoreService.getLoansFromDB();
+    setBusy(false);
+  }
 
   seteActive(bool active) {
     _active = active;

@@ -6,11 +6,13 @@ class Deposit {
   int amount;
   DateTime date;
   String description;
+  String name;
 
   Deposit(
       {@required this.amount,
       @required this.description,
       this.id,
       this.date,
-      this.installmentId});
+      this.installmentId,
+      @required this.name});
 }

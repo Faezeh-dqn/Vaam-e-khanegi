@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stacked/stacked.dart';
-import 'package:vaam_khanegi/viewmodels/withdraw_page_viewmodel.dart';
+import 'package:vaam_khanegi/viewmodels/deposit_page_viewModel.dart';
 import 'package:vaam_khanegi/views/menu_page.dart';
+import 'package:vaam_khanegi/views/loan.dart';
 
 import '../service_locator.dart';
 
-class withDrawPage extends StatelessWidget {
+class DepositPage extends StatefulWidget {
+  @override
+  _DepositPageState createState() => _DepositPageState();
+}
+
+class _DepositPageState extends State<DepositPage> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<WithdrawPageViewModel>.reactive(
-        viewModelBuilder: () => getIt<WithdrawPageViewModel>(),
+    return ViewModelBuilder<DepositPageViewModel>.reactive(
+        viewModelBuilder: () => getIt<DepositPageViewModel>(),
         builder: (context, model, child) => Scaffold(
               body: Center(
                 child: Column(
@@ -21,7 +27,7 @@ class withDrawPage extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(left: 210, top: 23),
                       child: Text(
-                        'برداشت ها',
+                        'واریزی ها',
                         style: TextStyle(
                             fontSize: 40, fontWeight: FontWeight.w800),
                       ),
@@ -31,27 +37,35 @@ class withDrawPage extends StatelessWidget {
                       height: 10,
                       indent: 10,
                       endIndent: 10,
-                      color: Colors.amberAccent.shade200,
+                      color: Color(0xff4221C6),
                     ),
                     Expanded(
                       child: ListView.builder(
-                        itemCount: model.withdraw.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 220,
-                                ),
-                                Text(
-                                  model.withdraw[index].name,
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
+                          itemCount: 2,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              child: Column(
+                                children: [
+                                  Text(
+                                    model.deposits[index].name,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xff4221C6),
+                                    ),
+                                  ),
+                                  Text(
+                                    'مبلغ واریزی : ${model.deposits[index].amount.toString()}',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  Text(
+                                    model.deposits[index].description,
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
                     ),
                     Padding(
                       padding: EdgeInsets.only(
@@ -62,7 +76,7 @@ class withDrawPage extends StatelessWidget {
                         width: 150,
                         child: RaisedButton(
                           elevation: 0,
-                          color: Colors.amberAccent.shade200,
+                          color: Color(0xff4221C6),
                           onPressed: () {
                             Get.to(() => MenuPage());
                           },
@@ -75,7 +89,7 @@ class withDrawPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),

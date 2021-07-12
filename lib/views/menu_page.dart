@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vaam_khanegi/views/createLoan_page.dart';
+import 'package:vaam_khanegi/views/installment_page.dart';
 
 import 'package:vaam_khanegi/views/loan.dart';
 import 'package:vaam_khanegi/views/members.dart';
-import 'package:vaam_khanegi/views/varizi.dart';
+import 'package:vaam_khanegi/views/deposit.dart';
 import 'package:vaam_khanegi/views/withdraw_page.dart';
 
 class MenuPage extends StatelessWidget {
@@ -37,7 +38,7 @@ class MenuPage extends StatelessWidget {
                     color: Color(0xff69CA2E),
                     itemName: 'اقساط',
                     onPressed: () {
-                      Get.to(() => LoanPage());
+                      Get.to(() => InstallmentsPage());
                     }),
               ],
             ),
@@ -57,7 +58,7 @@ class MenuPage extends StatelessWidget {
                     color: Color(0xff4221C6),
                     itemName: 'واریزی ها',
                     onPressed: () {
-                      Get.to(() => VariziPage());
+                      Get.to(() => DepositPage());
                     }),
               ],
             ),
