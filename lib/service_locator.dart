@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:vaam_khanegi/services/authentication_service.dart';
 import 'package:vaam_khanegi/services/firestore_service.dart';
+import 'package:vaam_khanegi/services/global_state.dart';
 import 'package:vaam_khanegi/viewmodels/createLoan_page_viewmodel.dart';
 import 'package:vaam_khanegi/viewmodels/installments_page_viewmodel.dart';
 import 'package:vaam_khanegi/viewmodels/member_page_viewmodel.dart';
@@ -19,10 +20,13 @@ setUpGetIt() {
     AuthenticationService(firebaseAuth: FirebaseAuth.instance),
   );
 
+  getIt.registerSingleton<GlobalState>(GlobalState());
+
   getIt.registerSingleton<FirestoreService>(
     FirestoreService(
       fireStore: FirebaseFirestore.instance,
       authenticationService: getIt<AuthenticationService>(),
+      globalState: getIt<GlobalState>(),
     ),
   );
 
@@ -35,8 +39,9 @@ setUpGetIt() {
 
   getIt.registerFactory<SignInViewModel>(
     () => SignInViewModel(
-      authenticationService: getIt<AuthenticationService>(),
-    ),
+        authenticationService: getIt<AuthenticationService>(),
+        globalState: getIt<GlobalState>(),
+        firestoreService: getIt<FirestoreService>()),
   );
 
   getIt.registerSingleton<DepositPageViewModel>(
@@ -47,10 +52,14 @@ setUpGetIt() {
   );
 
   getIt.registerFactory(
-    () => LoanPageViewModel(firestoreService: getIt<FirestoreService>()),
+    () => LoanPageViewModel(
+        firestoreService: getIt<FirestoreService>(),
+        globalState: getIt<GlobalState>()),
   );
   getIt.registerFactory(
-    () => CreateLoanPageViewModel(firestoreService: getIt<FirestoreService>()),
+    () => CreateLoanPageViewModel(
+        firestoreService: getIt<FirestoreService>(),
+        globalState: getIt<GlobalState>()),
   );
 
   getIt.registerFactory(

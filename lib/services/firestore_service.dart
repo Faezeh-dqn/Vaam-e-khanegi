@@ -3,13 +3,16 @@ import 'package:vaam_khanegi/models/createLoan.dart';
 import 'package:vaam_khanegi/models/loan.dart';
 import 'package:vaam_khanegi/models/user.dart';
 import 'package:vaam_khanegi/services/authentication_service.dart';
+import 'package:vaam_khanegi/services/global_state.dart';
 
 class FirestoreService {
   final FirebaseFirestore fireStore;
+  final GlobalState globalState;
   final AuthenticationService authenticationService;
   final String userCollection = 'users';
   final String createLoanCollection = 'createdLoan';
-  FirestoreService({this.authenticationService, this.fireStore});
+  FirestoreService(
+      {this.authenticationService, this.fireStore, this.globalState});
 
   Future createUser(User user) async {
     String currentUserId = authenticationService.firebaseAuth.currentUser.uid;
@@ -17,6 +20,15 @@ class FirestoreService {
         .collection(userCollection)
         .doc(currentUserId)
         .set(user.toMap());
+  }
+
+  Future retrivedUser() async {
+    String currentUserId = authenticationService.firebaseAuth.currentUser.uid;
+
+    DocumentSnapshot documentSnapshot =
+        await fireStore.collection(userCollection).doc(currentUserId).get();
+    User retrivedUser = User.fromMap(documentSnapshot.data());
+    return retrivedUser;
   }
 
   Future getMembers() async {
@@ -39,15 +51,28 @@ class FirestoreService {
   }
 
   Future getLoansFromDB() async {
-    List<Loan> loans = [];
-
     QuerySnapshot querySnapshot =
         await fireStore.collection(createLoanCollection).get();
     querySnapshot.docs.forEach((snapshot) {
-      Loan loan = Loan.fromMap(snapshot.data());
+      CreateLoan loan = CreateLoan.fromMap(snapshot.data());
 
-      loans.add(loan);
+      globalState.loans.add(loan);
     });
-    return loans;
+    return globalState.loans;
+  }
+
+  Future updateJoinedMembers(
+      CreateLoan loan, List<String> joinedMembers) async {
+    DocumentSnapshot documentSnapshot =
+        await fireStore.collection(createLoanCollection).doc(loan.id).get();
+
+    CreateLoan retrivedLoan = CreateLoan.fromMap(documentSnapshot.data());
+    CreateLoan updatedLoan = retrivedLoan.copyWith(
+        joinedMemberFullName: loan.joinedMemberFullName + joinedMembers);
+
+    await fireStore
+        .collection(createLoanCollection)
+        .doc(loan.id)
+        .set(updatedLoan.toMap());
   }
 }

@@ -44,8 +44,10 @@ class SignUpViewModel extends BaseViewModel {
         lastName: _lastName,
         email: _email,
         role: 'member',
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
       );
       await firestoreService.createUser(user);
+      await firestoreService.getLoansFromDB();
       await Get.off(MenuPage());
     } on AuthException catch (e) {
       Get.snackbar('Couldnt Sing up', e.message, backgroundColor: Colors.white);

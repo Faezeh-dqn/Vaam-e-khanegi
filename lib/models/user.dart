@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 class User {
+  final String id;
   final String firstName;
   final String lastName;
   final String email;
@@ -12,15 +13,18 @@ class User {
     @required this.lastName,
     @required this.email,
     @required this.role,
+    @required this.id,
   });
 
   User copyWith({
+    String id,
     String firstName,
     String lastName,
     String email,
     String role,
   }) {
     return User(
+      id: id ?? this.id,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
       email: email ?? this.email,
@@ -30,6 +34,7 @@ class User {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'firstName': firstName,
       'lastName': lastName,
       'email': email,
@@ -39,6 +44,7 @@ class User {
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
+      id: map['id'],
       firstName: map['firstName'],
       lastName: map['lastName'],
       email: map['email'],
@@ -52,7 +58,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(firstName: $firstName, lastName: $lastName, email: $email, role: $role)';
+    return 'User(id: $id, firstName: $firstName, lastName: $lastName, email: $email, role: $role)';
   }
 
   @override
@@ -60,6 +66,7 @@ class User {
     if (identical(this, other)) return true;
 
     return other is User &&
+        other.id == id &&
         other.firstName == firstName &&
         other.lastName == lastName &&
         other.email == email &&
@@ -68,7 +75,8 @@ class User {
 
   @override
   int get hashCode {
-    return firstName.hashCode ^
+    return id.hashCode ^
+        firstName.hashCode ^
         lastName.hashCode ^
         email.hashCode ^
         role.hashCode;

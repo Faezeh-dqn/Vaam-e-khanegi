@@ -19,7 +19,7 @@ class _LoanPageState extends State<LoanPage> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<LoanPageViewModel>.reactive(
       viewModelBuilder: () => getIt<LoanPageViewModel>(),
-      onModelReady: (model) => model.getLoansFromDB(),
+      onModelReady: (model) => model.getLoansFromGlobalState(),
       builder: (context, model, _) => Scaffold(
         body: Center(
           child: Stack(
@@ -39,111 +39,273 @@ class _LoanPageState extends State<LoanPage> {
                     height: 10,
                     indent: 10,
                     endIndent: 10,
-                    color: Colors.black,
+                    color: Color(0xffFF993A),
                   ),
                   Expanded(
                     child: ListView.builder(
                       itemCount: model.retrivedLoans.length,
                       itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            ExpansionPanelList(
-                              elevation: 1,
-                              expansionCallback: (int index, bool isExpanded) {
-                                bool x = model.active;
-                                x = !x;
-                                model.seteActive(x);
+                        return Card(
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  TextButton(
+                                    child: Text(
+                                      'بیشتر',
+                                      style: TextStyle(
+                                          color: Colors.green.shade500,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    onPressed: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return SimpleDialog(
+                                              children: [
+                                                SimpleDialogOption(
+                                                  child: Container(
+                                                    color: Colors.green,
+                                                    height: 50,
+                                                    width: 100,
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 80, top: 6),
+                                                      child: Text(
+                                                        'جزئیات',
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 24,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onPressed: () {
+                                                    showDetailsDialog(
+                                                        context, model, index);
+                                                  },
+                                                ),
+                                                SimpleDialogOption(
+                                                  child: Container(
+                                                    width: 100,
+                                                    height: 50,
+                                                    color: Colors.amber,
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 90, top: 7),
+                                                      child: Text(
+                                                        'اعضا',
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 24,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onPressed: () {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return SimpleDialog(
+                                                          title: Text(
+                                                            'اعضای وام',
+                                                            style: TextStyle(
+                                                              fontSize: 22,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color:
+                                                                  Colors.black,
+                                                            ),
+                                                          ),
+                                                          children: [
+                                                            (model
+                                                                        .retrivedLoans[
+                                                                            index]
+                                                                        .joinedMemberFullName ==
+                                                                    null)
+                                                                ? Text(
+                                                                    'تا کنون کسی عضو این وام نشده :(')
+                                                                : Text(
+                                                                    '${model.retrivedLoans[index].joinedMemberFullName.length}/${model.retrivedLoans[index].requierdMembers}',
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            20),
+                                                                  ),
+                                                            (model
+                                                                        .retrivedLoans[
+                                                                            index]
+                                                                        .joinedMemberFullName ==
+                                                                    null)
+                                                                ? Text(
+                                                                    '0/${model.retrivedLoans[index].requierdMembers}')
+                                                                : Text(
+                                                                    model
+                                                                        .retrivedLoans[
+                                                                            index]
+                                                                        .joinedMemberFullName
+                                                                        .toString(),
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            20),
+                                                                  ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                ),
+                                                SimpleDialogOption(
+                                                  child: Container(
+                                                    height: 50,
+                                                    width: 100,
+                                                    color: Color(0xffFF993A),
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 80, top: 4),
+                                                      child: Text(
+                                                        'عضویت',
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 24,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onPressed: () {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return SimpleDialog(
+                                                          title: Text(
+                                                            'آیا می خواهید عضو این وام شوید؟',
+                                                            style: TextStyle(
+                                                              fontSize: 22,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color:
+                                                                  Colors.black,
+                                                            ),
+                                                          ),
+                                                          children: [
+                                                            Row(
+                                                              children: [
+                                                                SizedBox(
+                                                                  width: 170,
+                                                                ),
+                                                                TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                  child: Text(
+                                                                    'خیر',
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            23,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        color: Colors
+                                                                            .grey
+                                                                            .shade600),
+                                                                  ),
+                                                                ),
+                                                                TextButton(
+                                                                  onPressed:
+                                                                      () async {
+                                                                    var x = num.parse(model
+                                                                        .retrivedLoans[
+                                                                            index]
+                                                                        .requierdMembers);
 
-                                setState(() {});
-                              },
-                              children: [
-                                ExpansionPanel(
-                                  isExpanded: model.active,
-                                  backgroundColor: Colors.grey.shade200,
-                                  headerBuilder:
-                                      (BuildContext context, bool isExpanded) {
-                                    return ListTile(
-                                      title: Text(
-                                        model.retrivedLoans[index].name,
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  body: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          SizedBox(
-                                            width: 2,
-                                          ),
-                                          RaisedButton(
-                                            elevation: 0,
-                                            color: Colors.amber,
-                                            onPressed: () {
-                                              setState(() {
-                                                showLoanMembersDialog(
-                                                    context, model, index);
-                                              });
-                                            },
-                                            child: Text('شرکت کنندگان',
-                                                style:
-                                                    PersianFonts.Vazir.copyWith(
-                                                        fontSize: 20,
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          RaisedButton(
-                                            elevation: 0,
-                                            color: Color(0xffFF993A),
-                                            onPressed: () {},
-                                            child: Text('اخذ',
-                                                style:
-                                                    PersianFonts.Vazir.copyWith(
-                                                        fontSize: 20,
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          RaisedButton(
-                                            elevation: 0,
-                                            color: Colors.green.shade400,
-                                            onPressed: () {
-                                              setState(
-                                                () {
-                                                  showDetailsDialog(
-                                                      context, model, index);
-                                                },
-                                              );
-                                            },
-                                            child: Text('جزئیات',
-                                                style:
-                                                    PersianFonts.Samim.copyWith(
-                                                        fontSize: 20,
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                          ),
-                                          SizedBox(
-                                            width: 20,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                                                    if (model
+                                                                            .retrivedLoans[index]
+                                                                            .joinedMemberFullName
+                                                                            .length <=
+                                                                        x) {
+                                                                      await model
+                                                                          .getUserName(
+                                                                              model.retrivedLoans[index]);
+                                                                      await model.updateJoinedMember(
+                                                                          model.retrivedLoans[
+                                                                              index],
+                                                                          model
+                                                                              .joinedMembers);
+                                                                      await showTopSnackBar(
+                                                                        context,
+                                                                        CustomSnackBar
+                                                                            .success(
+                                                                          message:
+                                                                              'وام با موفقیت ثبت شد ',
+                                                                        ),
+                                                                      );
+                                                                    } else {
+                                                                      showTopSnackBar(
+                                                                        context,
+                                                                        CustomSnackBar
+                                                                            .error(
+                                                                          message:
+                                                                              'ظرفیت این وام پر شده است ',
+                                                                        ),
+                                                                      );
+                                                                    }
+
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                  child: Text(
+                                                                    'بله',
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            23,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        color: Colors
+                                                                            .green),
+                                                                  ),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          });
+                                    },
                                   ),
-                                ),
-                              ],
-                            )
-                          ],
+                                  Text(
+                                    model.retrivedLoans[index].name,
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                            ],
+                          ),
                         );
                       },
                     ),
@@ -159,6 +321,7 @@ class _LoanPageState extends State<LoanPage> {
                     elevation: 0,
                     color: Color(0xffFF993A),
                     onPressed: () {
+                      print('length is${model.retrivedLoans.length}');
                       Get.to(() => MenuPage());
                     },
                     child: Text(
@@ -175,115 +338,6 @@ class _LoanPageState extends State<LoanPage> {
           ),
         ),
       ),
-    );
-  }
-
-  Future<dynamic> showLoanMembersDialog(
-      BuildContext context, LoanPageViewModel model, int index) {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return SimpleDialog(
-          title: Padding(
-            padding: EdgeInsets.only(left: 80),
-            child: Text(
-              'شرکت کنندگان وام',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-          ),
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(left: 60, bottom: 10),
-              child: Text(
-                'آمار شرکت کنندگان : ${model.retrivedLoans[index].joinedMembers.length}/${model.retrivedLoans[index].requierdMembers}',
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            SimpleDialogOption(
-              child: Container(
-                width: 10,
-                height: 40,
-                color: Colors.blue.shade900,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 75, top: 5),
-                  child: Text(
-                    'اعضای وام',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return SimpleDialog(
-                        title: Padding(
-                          padding: EdgeInsets.only(left: 180),
-                          child: Text(
-                            'اعضای وام',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 40),
-                            child: Text(
-                              ' ${model.retrivedLoans[index].joinedMembers.toString()}',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ),
-                        ],
-                      );
-                    });
-              },
-            ),
-            SimpleDialogOption(
-              child: Container(
-                width: 10,
-                height: 40,
-                color: Colors.amber,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 80, top: 5),
-                  child: Text(
-                    'عضویت',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-              onPressed: () async {
-                model.seteJoinedMembers(
-                    model.retrivedLoans[index].joinedMembers.length++);
-                Navigator.pop(context);
-                showTopSnackBar(
-                  context,
-                  CustomSnackBar.success(
-                    message: 'عضویت شما ثبت شد ',
-                  ),
-                );
-              },
-            )
-          ],
-        );
-      },
     );
   }
 

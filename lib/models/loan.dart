@@ -20,9 +20,9 @@ class Loan {
     @required this.name,
     @required this.requierdMembers,
     @required this.id,
-    @required this.joinedMembers,
-    @required this.lotteryDate,
-    @required this.winnersInOrder,
+    this.joinedMembers,
+    this.lotteryDate,
+    this.winnersInOrder,
   });
 
   Loan copyWith({
@@ -67,9 +67,15 @@ class Loan {
       description: map['description'],
       amount: map['amount'],
       requierdMembers: map['requierdMembers'],
-      joinedMembers: List<String>.from(map['joinedMembers']),
-      lotteryDate: DateTime.fromMillisecondsSinceEpoch(map['lotteryDate']),
-      winnersInOrder: List<String>.from(map['winnersInOrder']),
+      joinedMembers: map['joinedMembers'] != null
+          ? List<String>.from(map['joinedMembers'])
+          : null,
+      lotteryDate: map['lotteryDate'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['lotteryDate'])
+          : null,
+      winnersInOrder: map['winnersInOrder'] != null
+          ? List<String>.from(map['winnersInOrder'])
+          : null,
     );
   }
 

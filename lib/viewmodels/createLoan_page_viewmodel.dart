@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 import 'package:vaam_khanegi/models/createLoan.dart';
 import 'package:vaam_khanegi/services/firestore_service.dart';
+import 'package:vaam_khanegi/services/global_state.dart';
 
 class CreateLoanPageViewModel extends BaseViewModel {
   String _name;
@@ -11,7 +12,9 @@ class CreateLoanPageViewModel extends BaseViewModel {
   String _requierdMembers;
 
   FirestoreService firestoreService;
-  CreateLoanPageViewModel({@required this.firestoreService});
+  GlobalState globalState;
+  CreateLoanPageViewModel(
+      {@required this.firestoreService, @required this.globalState});
 
   Future createLoan() async {
     CreateLoan createLoan = CreateLoan(
@@ -19,9 +22,13 @@ class CreateLoanPageViewModel extends BaseViewModel {
         amount: amount,
         description: description,
         name: name,
-        requierdMembers: requierdMembers);
+        requierdMembers: requierdMembers,
+        joinedMemberFullName: [],
+        joinedMemberId: []);
 
     await firestoreService.createLoan(createLoan);
+    await globalState.loans.clear();
+    await firestoreService.getLoansFromDB();
   }
 
   setName(String name) {
