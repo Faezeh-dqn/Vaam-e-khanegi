@@ -46,7 +46,7 @@ class CreateLoan {
       'id': id,
       'name': name,
       'description': description,
-      'joinedMember': joinedMemberId,
+      'joinedMemberId': joinedMemberId,
       'joinedMemberFullName': joinedMemberFullName,
       'requierdMembers': requierdMembers,
       'amount': amount,
@@ -59,7 +59,7 @@ class CreateLoan {
       name: map['name'],
       description: map['description'],
       joinedMemberId: map['joinedMemberId'] != null
-          ? List<String>.from(map['joinedMember'])
+          ? List<String>.from(map['joinedMemberId'])
           : null,
       joinedMemberFullName: map['joinedMemberFullName'] != null
           ? List<String>.from(map['joinedMemberFullName'])

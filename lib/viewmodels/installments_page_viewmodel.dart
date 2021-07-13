@@ -9,11 +9,15 @@ class InstallmentPageViewModel extends BaseViewModel {
 
   List installments = [
     Installment(
+        loanId: DateTime.now().millisecondsSinceEpoch.toString(),
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
         name: 'وام 3 میلیون تومانی',
         amount: 375000,
         dueDate: DateTime.now(),
         status: 'پرداخت شده'),
     Installment(
+        loanId: DateTime.now().millisecondsSinceEpoch.toString(),
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
         name: 'وام 5 میلیون تومانی',
         amount: 417000,
         dueDate: DateTime.now(),

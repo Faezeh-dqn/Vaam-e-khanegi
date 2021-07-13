@@ -158,7 +158,7 @@ class _CreateLoanPageState extends State<CreateLoanPage> {
                               onPressed: () async {
                                 await model.createLoan();
 
-                                await showTopSnackBar(
+                                showTopSnackBar(
                                   context,
                                   CustomSnackBar.success(
                                     message: 'وام با موفقیت ثبت شد ',

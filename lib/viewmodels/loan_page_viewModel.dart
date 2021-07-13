@@ -24,21 +24,24 @@ class LoanPageViewModel extends BaseViewModel {
   }
 
   getLoansFromGlobalState() {
+    print('get loanss from db');
     retrivedLoans = globalState.loans;
+    print(globalState.loans);
+    notifyListeners();
   }
 
   Future getUserName(CreateLoan loan) async {
     user = await firestoreService.retrivedUser();
+    print('Loan is : $loan');
     if (loan.joinedMemberId.isEmpty) {
-      await loan.joinedMemberId.add(user.id);
-      await loan.joinedMemberFullName.add(user.firstName + ' ' + user.lastName);
+      loan.joinedMemberId.add(user.id);
+      loan.joinedMemberFullName.add(user.firstName + ' ' + user.lastName);
     } else {
       if (loan.joinedMemberId.contains(user.id)) {
         print('user is already exists');
       } else {
-        await loan.joinedMemberId.add(user.id);
-        await loan.joinedMemberFullName
-            .add(user.firstName + ' ' + user.lastName);
+        loan.joinedMemberId.add(user.id);
+        loan.joinedMemberFullName.add(user.firstName + ' ' + user.lastName);
       }
     }
   }

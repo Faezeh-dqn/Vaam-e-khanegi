@@ -245,7 +245,7 @@ class _LoanPageState extends State<LoanPage> {
                                                                               index],
                                                                           model
                                                                               .joinedMembers);
-                                                                      await showTopSnackBar(
+                                                                      showTopSnackBar(
                                                                         context,
                                                                         CustomSnackBar
                                                                             .success(

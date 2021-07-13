@@ -27,7 +27,7 @@ class CreateLoanPageViewModel extends BaseViewModel {
         joinedMemberId: []);
 
     await firestoreService.createLoan(createLoan);
-    await globalState.loans.clear();
+    globalState.loans.clear();
     await firestoreService.getLoansFromDB();
   }
 
