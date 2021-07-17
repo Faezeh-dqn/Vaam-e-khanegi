@@ -68,6 +68,84 @@ class _LoanPageState extends State<LoanPage> {
                                               children: [
                                                 SimpleDialogOption(
                                                   child: Container(
+                                                    color: (model
+                                                                .retrivedLoans[
+                                                                    index]
+                                                                .joinedMemberId
+                                                                .length
+                                                                .toString() ==
+                                                            model
+                                                                .retrivedLoans[
+                                                                    index]
+                                                                .requierdMembers)
+                                                        ? Colors.indigo.shade900
+                                                        : Colors.grey,
+                                                    height: 50,
+                                                    width: 100,
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 80, top: 6),
+                                                      child: Text(
+                                                        'نتیجه  ',
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 24,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onPressed: () async {
+                                                    (model
+                                                                .retrivedLoans[
+                                                                    index]
+                                                                .joinedMemberId
+                                                                .length
+                                                                .toString() ==
+                                                            model
+                                                                .retrivedLoans[
+                                                                    index]
+                                                                .requierdMembers)
+                                                        ? await showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
+                                                              return SimpleDialog(
+                                                                title: Text(
+                                                                  ' نتایج قرعه کشی بین اعضای وام',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        22,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Colors
+                                                                        .black,
+                                                                  ),
+                                                                ),
+                                                                children: [
+                                                                  Text(model
+                                                                      .nameOfWinners
+                                                                      .toString())
+                                                                ],
+                                                              );
+                                                            },
+                                                          )
+                                                        : showTopSnackBar(
+                                                            context,
+                                                            CustomSnackBar
+                                                                .error(
+                                                              message:
+                                                                  'ظرفیت این وام تکمیل نشده است ',
+                                                            ),
+                                                          );
+                                                  },
+                                                ),
+                                                SimpleDialogOption(
+                                                  child: Container(
                                                     color: Colors.green,
                                                     height: 50,
                                                     width: 100,
@@ -128,14 +206,14 @@ class _LoanPageState extends State<LoanPage> {
                                                           ),
                                                           children: [
                                                             (model
-                                                                        .retrivedLoans[
-                                                                            index]
-                                                                        .joinedMemberFullName ==
-                                                                    null)
+                                                                    .retrivedLoans[
+                                                                        index]
+                                                                    .joinedMemberId
+                                                                    .isEmpty)
                                                                 ? Text(
                                                                     'تا کنون کسی عضو این وام نشده :(')
                                                                 : Text(
-                                                                    '${model.retrivedLoans[index].joinedMemberFullName.length}/${model.retrivedLoans[index].requierdMembers}',
+                                                                    '${model.retrivedLoans[index].joinedMemberId.length}/${model.retrivedLoans[index].requierdMembers}',
                                                                     style: TextStyle(
                                                                         fontSize:
                                                                             20),
@@ -143,15 +221,13 @@ class _LoanPageState extends State<LoanPage> {
                                                             (model
                                                                         .retrivedLoans[
                                                                             index]
-                                                                        .joinedMemberFullName ==
+                                                                        .joinedMemberId ==
                                                                     null)
                                                                 ? Text(
                                                                     '0/${model.retrivedLoans[index].requierdMembers}')
                                                                 : Text(
                                                                     model
-                                                                        .retrivedLoans[
-                                                                            index]
-                                                                        .joinedMemberFullName
+                                                                        .retrivedFullName
                                                                         .toString(),
                                                                     style: TextStyle(
                                                                         fontSize:
@@ -227,39 +303,47 @@ class _LoanPageState extends State<LoanPage> {
                                                                 TextButton(
                                                                   onPressed:
                                                                       () async {
-                                                                    var x = num.parse(model
-                                                                        .retrivedLoans[
-                                                                            index]
-                                                                        .requierdMembers);
-
                                                                     if (model
+                                                                            .retrivedLoans[
+                                                                                index]
+                                                                            .joinedMemberId
+                                                                            .length
+                                                                            .toString() ==
+                                                                        model
                                                                             .retrivedLoans[index]
-                                                                            .joinedMemberFullName
-                                                                            .length <=
-                                                                        x) {
-                                                                      await model
-                                                                          .getUserName(
-                                                                              model.retrivedLoans[index]);
-                                                                      await model.updateJoinedMember(
-                                                                          model.retrivedLoans[
-                                                                              index],
-                                                                          model
-                                                                              .joinedMembers);
-                                                                      showTopSnackBar(
-                                                                        context,
-                                                                        CustomSnackBar
-                                                                            .success(
-                                                                          message:
-                                                                              'وام با موفقیت ثبت شد ',
-                                                                        ),
-                                                                      );
-                                                                    } else {
+                                                                            .requierdMembers) {
                                                                       showTopSnackBar(
                                                                         context,
                                                                         CustomSnackBar
                                                                             .error(
                                                                           message:
                                                                               'ظرفیت این وام پر شده است ',
+                                                                        ),
+                                                                      );
+                                                                    } else {
+                                                                      await model
+                                                                          .addIdToJoinedMemberId(
+                                                                              model.retrivedLoans[index]);
+                                                                      await model.updateJoinedMember(
+                                                                          model.retrivedLoans[
+                                                                              index],
+                                                                          model
+                                                                              .retrivedLoans[
+                                                                                  index]
+                                                                              .joinedMemberId,
+                                                                          model
+                                                                              .retrivedLoans[
+                                                                                  index]
+                                                                              .winnersInOrder,
+                                                                          model
+                                                                              .retrivedLoans[index]
+                                                                              .lotteryDate);
+                                                                      showTopSnackBar(
+                                                                        context,
+                                                                        CustomSnackBar
+                                                                            .success(
+                                                                          message:
+                                                                              'وام با موفقیت ثبت شد ',
                                                                         ),
                                                                       );
                                                                     }

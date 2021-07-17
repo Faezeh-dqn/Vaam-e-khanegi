@@ -39,11 +39,13 @@ class SignUpViewModel extends BaseViewModel {
   signUp() async {
     try {
       await authenticationService.signUp(email: _email, password: _password);
+      // Say Kare Ma Namosan
       User user = User(
         firstName: _firstName,
         lastName: _lastName,
         email: _email,
         role: 'member',
+        image: '',
         id: DateTime.now().millisecondsSinceEpoch.toString(),
       );
       await firestoreService.createUser(user);

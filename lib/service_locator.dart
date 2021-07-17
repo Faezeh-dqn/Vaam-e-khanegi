@@ -1,12 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:vaam_khanegi/services/authentication_service.dart';
+import 'package:vaam_khanegi/services/firebase_storage_service.dart';
 import 'package:vaam_khanegi/services/firestore_service.dart';
 import 'package:vaam_khanegi/services/global_state.dart';
+import 'package:vaam_khanegi/services/systemClock.dart';
+import 'package:vaam_khanegi/viewmodels/chosenLoan_page_viewmodel.dart';
 import 'package:vaam_khanegi/viewmodels/createLoan_page_viewmodel.dart';
 import 'package:vaam_khanegi/viewmodels/installments_page_viewmodel.dart';
 import 'package:vaam_khanegi/viewmodels/member_page_viewmodel.dart';
+import 'package:vaam_khanegi/viewmodels/menu_page_viewmodel.dart';
 import 'package:vaam_khanegi/viewmodels/sign_up_page_viewmodel.dart';
 import 'package:vaam_khanegi/viewmodels/loan_page_viewModel.dart';
 import 'package:vaam_khanegi/viewmodels/deposit_page_viewModel.dart';
@@ -21,6 +26,7 @@ setUpGetIt() {
   );
 
   getIt.registerSingleton<GlobalState>(GlobalState());
+  getIt.registerSingleton<SystemClock>(SystemClockImpl());
 
   getIt.registerSingleton<FirestoreService>(
     FirestoreService(
@@ -37,6 +43,12 @@ setUpGetIt() {
     ),
   );
 
+  getIt.registerFactory<MenuPageViewModel>(
+    () => MenuPageViewModel(
+      firestoreService: getIt<FirestoreService>(),
+    ),
+  );
+
   getIt.registerFactory<SignInViewModel>(
     () => SignInViewModel(
         authenticationService: getIt<AuthenticationService>(),
@@ -44,11 +56,21 @@ setUpGetIt() {
         firestoreService: getIt<FirestoreService>()),
   );
 
-  getIt.registerSingleton<DepositPageViewModel>(
-    DepositPageViewModel(),
-  );
   getIt.registerFactory(
-    () => InstallmentPageViewModel(firestoreService: getIt<FirestoreService>()),
+    () => InstallmentPageViewModel(
+        firestoreService: getIt<FirestoreService>(),
+        globalState: getIt<GlobalState>()),
+  );
+
+  getIt.registerFactory(
+    () => DepositPageViewModel(
+      firestoreService: getIt<FirestoreService>(),
+    ),
+  );
+  getIt.registerSingleton<FirebaseStorageService>(
+    FirebaseStorageService(
+      firebaseStorage: FirebaseStorage.instance,
+    ),
   );
 
   getIt.registerFactory(
@@ -63,9 +85,19 @@ setUpGetIt() {
   );
 
   getIt.registerFactory(
-    () => MemberPageViewModel(firestoreService: getIt<FirestoreService>()),
+    () => MemberPageViewModel(
+      firestoreService: getIt<FirestoreService>(),
+      firebaseStorageService: getIt<FirebaseStorageService>(),
+    ),
   );
   getIt.registerFactory(
-    () => WithdrawPageViewModel(),
+    () => ChosenLoanPageViewModel(
+        firestoreService: getIt<FirestoreService>(),
+        globalState: getIt<GlobalState>()),
+  );
+  getIt.registerFactory(
+    () => WithdrawPageViewModel(
+        firestoreService: getIt<FirestoreService>(),
+        globalState: getIt<GlobalState>()),
   );
 }

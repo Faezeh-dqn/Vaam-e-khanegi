@@ -19,13 +19,12 @@ dependencies:
   intl: ^0.17.0
   persian_fonts: ^1.0.3
   firebase_core: ^1.0.3
+  firebase_storage: ^8.0.3
   firebase_auth: ^1.1.0
   cloud_firestore: ^1.0.5
   top_snackbar_flutter: ^1.0.0
-
-
- 
   cupertino_icons: ^1.0.2
+  image_picker: ^0.7.5+3
 
 dev_dependencies:
   flutter_test:
@@ -36,6 +35,7 @@ flutter:
   uses-material-design: true
   assets:
     - images/giah.jpg
+    - images/no_pic.png
     
 
 

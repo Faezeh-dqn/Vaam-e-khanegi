@@ -8,13 +8,14 @@ class User {
   final String lastName;
   final String email;
   final String role;
-  User({
-    @required this.firstName,
-    @required this.lastName,
-    @required this.email,
-    @required this.role,
-    @required this.id,
-  });
+  final String image;
+  User(
+      {@required this.firstName,
+      @required this.lastName,
+      @required this.email,
+      @required this.role,
+      @required this.id,
+      @required this.image});
 
   User copyWith({
     String id,
@@ -22,6 +23,7 @@ class User {
     String lastName,
     String email,
     String role,
+    String image,
   }) {
     return User(
       id: id ?? this.id,
@@ -29,6 +31,7 @@ class User {
       lastName: lastName ?? this.lastName,
       email: email ?? this.email,
       role: role ?? this.role,
+      image: image ?? this.image,
     );
   }
 
@@ -39,6 +42,7 @@ class User {
       'lastName': lastName,
       'email': email,
       'role': role,
+      'image': image,
     };
   }
 
@@ -49,6 +53,7 @@ class User {
       lastName: map['lastName'],
       email: map['email'],
       role: map['role'],
+      image: map['image'],
     );
   }
 
@@ -58,7 +63,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(id: $id, firstName: $firstName, lastName: $lastName, email: $email, role: $role)';
+    return 'User(id: $id, firstName: $firstName, lastName: $lastName, email: $email, role: $role , image : $image)';
   }
 
   @override
@@ -70,6 +75,7 @@ class User {
         other.firstName == firstName &&
         other.lastName == lastName &&
         other.email == email &&
+        other.image == image &&
         other.role == role;
   }
 
@@ -78,6 +84,7 @@ class User {
     return id.hashCode ^
         firstName.hashCode ^
         lastName.hashCode ^
+        image.hashCode ^
         email.hashCode ^
         role.hashCode;
   }

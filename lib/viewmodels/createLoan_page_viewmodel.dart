@@ -3,6 +3,9 @@ import 'package:stacked/stacked.dart';
 import 'package:vaam_khanegi/models/createLoan.dart';
 import 'package:vaam_khanegi/services/firestore_service.dart';
 import 'package:vaam_khanegi/services/global_state.dart';
+import 'package:vaam_khanegi/services/systemClock.dart';
+
+import '../service_locator.dart';
 
 class CreateLoanPageViewModel extends BaseViewModel {
   String _name;
@@ -18,13 +21,17 @@ class CreateLoanPageViewModel extends BaseViewModel {
 
   Future createLoan() async {
     CreateLoan createLoan = CreateLoan(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        amount: amount,
-        description: description,
-        name: name,
-        requierdMembers: requierdMembers,
-        joinedMemberFullName: [],
-        joinedMemberId: []);
+      id: getIt<SystemClock>()
+          .getCurrentTime()
+          .millisecondsSinceEpoch
+          .toString(),
+      amount: amount,
+      description: description,
+      name: name,
+      requierdMembers: requierdMembers,
+      joinedMemberId: [],
+      winnersInOrder: [],
+    );
 
     await firestoreService.createLoan(createLoan);
     globalState.loans.clear();
