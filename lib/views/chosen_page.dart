@@ -74,7 +74,8 @@ class ChosenLoanPage extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      model.dateTimes[index].toString(),
+                                      model.formatShamsiDate(
+                                          model.dateTimes[index]),
                                       style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,

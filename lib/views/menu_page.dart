@@ -11,6 +11,7 @@ import 'package:vaam_khanegi/views/installment_page.dart';
 import 'package:vaam_khanegi/views/loan.dart';
 import 'package:vaam_khanegi/views/members.dart';
 import 'package:vaam_khanegi/views/deposit.dart';
+import 'package:vaam_khanegi/views/profile_page.dart';
 import 'package:vaam_khanegi/views/withdraw_page.dart';
 
 import '../service_locator.dart';
@@ -28,7 +29,7 @@ class MenuPage extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 35,
+                        height: 45,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -46,7 +47,7 @@ class MenuPage extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                        height: 30,
+                        height: 25,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -66,7 +67,7 @@ class MenuPage extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 16,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -86,7 +87,7 @@ class MenuPage extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 16,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -108,26 +109,38 @@ class MenuPage extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 16,
                       ),
-                      MenuPageItems(
-                        itemName: 'ایجاد وام',
-                        color: (model.adminRole == true)
-                            ? Color(0xffFF3AEB)
-                            : Colors.grey,
-                        onPressed: () async {
-                          if (model.adminRole == true) {
-                            await Get.to(() => CreateLoanPage());
-                          } else {
-                            showTopSnackBar(
-                              context,
-                              CustomSnackBar.error(
-                                message:
-                                    'دسترسی به این قسمت برای اعضا مجاز نیست ',
-                              ),
-                            );
-                          }
-                        },
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          MenuPageItems(
+                            itemName: 'ایجاد وام',
+                            color: (model.adminRole == true)
+                                ? Color(0xffFF3AEB)
+                                : Colors.grey,
+                            onPressed: () async {
+                              if (model.adminRole == true) {
+                                await Get.to(() => CreateLoanPage());
+                              } else {
+                                showTopSnackBar(
+                                  context,
+                                  CustomSnackBar.error(
+                                    message:
+                                        'دسترسی به این قسمت برای اعضا مجاز نیست ',
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                          MenuPageItems(
+                            itemName: ' پروفایل',
+                            color: Color(0xffB7006E),
+                            onPressed: () {
+                              Get.to(() => ProfilePage());
+                            },
+                          ),
+                        ],
                       )
                     ],
                   ),

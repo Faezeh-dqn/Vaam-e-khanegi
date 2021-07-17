@@ -50,7 +50,7 @@ class InstallmentsPage extends StatelessWidget {
                               color: (model.installments1[index].status ==
                                       'پرداخت نشده')
                                   ? Color(0xff69CA2E)
-                                  : Colors.grey.shade400,
+                                  : model.color,
                               child: Text(
                                 'پرداخت',
                                 style: TextStyle(
@@ -59,103 +59,135 @@ class InstallmentsPage extends StatelessWidget {
                                     fontWeight: FontWeight.bold),
                               ),
                               onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return SimpleDialog(
-                                      title: Padding(
-                                        padding: EdgeInsets.only(
-                                          left: 65,
-                                        ),
-                                        child: Text(
-                                          'اعضای وام',
-                                          style: TextStyle(
-                                            fontSize: 22,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(left: 100),
-                                          child: Text(
-                                            model.installments1[index].name,
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          model.installments1[index].amount
-                                              .toString(),
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          model.installments1[index].dueDate
-                                              .toString(),
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          model.installments1[index].status,
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        SimpleDialogOption(
-                                          child: Container(
-                                            height: 50,
-                                            width: 100,
-                                            color: Color(0xff69CA2E),
-                                            child: Padding(
+                                (model.installments1[index].status ==
+                                        'پرداخت نشده')
+                                    ? showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return SimpleDialog(
+                                            title: Padding(
                                               padding: EdgeInsets.only(
-                                                  left: 80, top: 4),
+                                                left: 65,
+                                              ),
                                               child: Text(
-                                                'پرداخت',
+                                                'اعضای وام',
                                                 style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 24,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                  fontSize: 22,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          onPressed: () async {
-                                            await model.updateStatus(
-                                                'پرداخت شد',
-                                                model.installments1[index]);
-
-                                            showTopSnackBar(
-                                              context,
-                                              CustomSnackBar.success(
-                                                message:
-                                                    'وام با موفقیت ثبت شد ',
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    EdgeInsets.only(left: 100),
+                                                child: Text(
+                                                  model.installments1[index]
+                                                      .name,
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
                                               ),
-                                            );
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    EdgeInsets.only(left: 50),
+                                                child: Text(
+                                                  'مبلغ وام : ${model.installments1[index].amount.toString()}',
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    EdgeInsets.only(left: 40),
+                                                child: Text(
+                                                  model.formatShamsiDate(model
+                                                      .installments1[index]
+                                                      .dueDate),
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    EdgeInsets.only(left: 40),
+                                                child: Text(
+                                                  'وضعیت : ${model.installments1[index].status}',
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.red),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              SimpleDialogOption(
+                                                child: Container(
+                                                  height: 50,
+                                                  width: 100,
+                                                  color: Color(0xff69CA2E),
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 80, top: 4),
+                                                    child: Text(
+                                                      'پرداخت',
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 24,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ),
+                                                ),
+                                                onPressed: () async {
+                                                  await model.updateStatus(
+                                                      'پرداخت شد',
+                                                      model.installments1[
+                                                          index]);
 
-                                            Navigator.pop(context);
-                                          },
-                                        )
-                                      ],
-                                    );
-                                  },
-                                );
+                                                  // await model.getInstallments();
+                                                  await model.setColor(
+                                                      Colors.grey.shade400);
+
+                                                  showTopSnackBar(
+                                                    context,
+                                                    CustomSnackBar.success(
+                                                      message:
+                                                          'قسط با موفقیت پرداخت شد ',
+                                                    ),
+                                                  );
+
+                                                  Navigator.pop(context);
+                                                },
+                                              )
+                                            ],
+                                          );
+                                        },
+                                      )
+                                    : showTopSnackBar(
+                                        context,
+                                        CustomSnackBar.info(
+                                          message: 'این قسط پرداخت شده ',
+                                        ),
+                                      );
                               },
                             ),
                             Padding(

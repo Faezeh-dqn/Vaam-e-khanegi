@@ -82,7 +82,10 @@ class WithDrawPage extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       RaisedButton(
-                                        onPressed: () {},
+                                        onPressed: () async {
+                                          await model.addWithdrawsToDB(
+                                              model.retrivedLoans);
+                                        },
                                         color: Colors.amberAccent.shade400,
                                         child: Text(
                                           'برداشت',
@@ -112,9 +115,7 @@ class WithDrawPage extends StatelessWidget {
                               child: RaisedButton(
                                 elevation: 0,
                                 color: Colors.amberAccent.shade200,
-                                onPressed: () async {
-                                  await model
-                                      .addWithdrawsToDB(model.retrivedLoans);
+                                onPressed: () {
                                   Get.to(() => MenuPage());
                                 },
                                 child: Text(

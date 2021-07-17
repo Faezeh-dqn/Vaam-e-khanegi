@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:shamsi_date/shamsi_date.dart';
 import 'package:stacked/stacked.dart';
 import 'package:vaam_khanegi/models/createLoan.dart';
 import 'package:vaam_khanegi/models/installment.dart';
@@ -15,6 +16,7 @@ import 'package:vaam_khanegi/services/systemClock.dart';
 class LoanPageViewModel extends BaseViewModel {
   bool isduplicate = false;
   User user;
+  User userfirst;
   bool stop = false;
 
   List<CreateLoan> retrivedLoans = [];
@@ -27,8 +29,10 @@ class LoanPageViewModel extends BaseViewModel {
   LoanPageViewModel(
       {@required this.firestoreService, @required this.globalState});
 
-  getLoansFromGlobalState() {
+  getLoansFromGlobalState() async {
     retrivedLoans = globalState.loans;
+    setBusy(true);
+    userfirst = await firestoreService.retrivedUser();
 
     notifyListeners();
   }
@@ -37,29 +41,37 @@ class LoanPageViewModel extends BaseViewModel {
     await firestoreService.addLoanToUser(loan);
   }
 
-  getNameOfWinners(CreateLoan loan) {
-    loan.winnersInOrder.forEach((element) async {
-      User retrivedUser = await firestoreService.getUSerById(element);
+  getNameOfWinners(CreateLoan loan) async {
+    for (var i = 0; i <= loan.winnersInOrder.length - 1; i++) {
+      User retrivedUser =
+          await firestoreService.getUSerById(loan.winnersInOrder[i]);
       nameOfWinners.add(retrivedUser.firstName + ' ' + retrivedUser.lastName);
       print(
           'string is : ${retrivedUser.firstName + ' ' + retrivedUser.lastName}');
       print('retrivedUser is : $nameOfWinners');
       print(loan.winnersInOrder);
-    });
+    }
   }
 
   Future addIdToJoinedMemberId(CreateLoan loan) async {
     User user = await firestoreService.retrivedUser();
-
-    if (loan.joinedMemberId.contains(user.id) == false) {
+    if (loan.joinedMemberId.isEmpty) {
       loan.joinedMemberId.add(user.id);
-      loan.joinedMemberId.forEach((element) async {
-        User retrivedUser = await firestoreService.getUSerById(element);
-        retrivedFullName
-            .add(retrivedUser.firstName + ' ' + retrivedUser.lastName);
-      });
-      print('joinedme is :${loan.joinedMemberId}');
-      print('retrivedFullname is : $retrivedFullName');
+    } else if (loan.joinedMemberId.contains(user.id) == false) {
+      loan.joinedMemberId.add(user.id);
+      print(loan.joinedMemberId.length);
+      print(loan.requierdMembers);
+
+      if (loan.joinedMemberId.length.toString() == loan.requierdMembers) {
+        for (var i = 0; i <= loan.joinedMemberId.length - 1; i++) {
+          User retrivedUser =
+              await firestoreService.getUSerById(loan.joinedMemberId[i]);
+          retrivedFullName
+              .add(retrivedUser.firstName + ' ' + retrivedUser.lastName);
+          print('joinedme is :${loan.joinedMemberId}');
+          print('retrivedFullname is : $retrivedFullName');
+        }
+      }
     }
     if (loan.requierdMembers.toString() ==
             loan.joinedMemberId.length.toString() &&
@@ -125,7 +137,7 @@ class LoanPageViewModel extends BaseViewModel {
     for (var i = 0; i < loan.joinedMemberId.length; i++) {
       String userId = loan.joinedMemberId[i];
       for (int j = 1; j <= int.parse(loan.requierdMembers); j++) {
-        int days = j * 30;
+        int days = j * 29;
         Installment installment = Installment(
           id: getIt<SystemClock>()
               .getCurrentTime()

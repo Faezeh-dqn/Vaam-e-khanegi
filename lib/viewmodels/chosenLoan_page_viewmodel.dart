@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
+import 'package:shamsi_date/shamsi_date.dart';
 import 'package:stacked/stacked.dart';
 import 'package:vaam_khanegi/models/createLoan.dart';
 import 'package:vaam_khanegi/models/user.dart';
 import 'package:vaam_khanegi/services/firestore_service.dart';
 import 'package:vaam_khanegi/services/global_state.dart';
+import 'package:vaam_khanegi/services/systemClock.dart';
+
+import '../service_locator.dart';
 
 class ChosenLoanPageViewModel extends BaseViewModel {
   FirestoreService firestoreService;
@@ -42,6 +46,7 @@ class ChosenLoanPageViewModel extends BaseViewModel {
     User user = await firestoreService.retrivedUser();
     setBusy(false);
     String id = user.id;
+    print(getIt<SystemClock>().getCurrentTime());
 
     loans.forEach(
       (element) {
@@ -62,5 +67,13 @@ class ChosenLoanPageViewModel extends BaseViewModel {
     print(dateTimes);
     print(seperatedLoans.length);
     notifyListeners();
+  }
+
+  String formatShamsiDate(DateTime dateTime) {
+    Jalali jalali = Jalali.fromDateTime(dateTime);
+    JalaliFormatter jalaliFormatter = jalali.formatter;
+    String formatDate =
+        '${jalaliFormatter.wN} , ${jalaliFormatter.d} ${jalaliFormatter.mN} ${jalaliFormatter.yyyy}';
+    return formatDate;
   }
 }

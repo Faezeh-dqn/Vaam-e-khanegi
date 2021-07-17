@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:vaam_khanegi/models/createLoan.dart';
 import 'package:vaam_khanegi/models/deposit.dart';
@@ -6,6 +7,7 @@ import 'package:vaam_khanegi/models/installment.dart';
 import 'package:vaam_khanegi/services/firestore_service.dart';
 import 'package:vaam_khanegi/services/global_state.dart';
 import 'package:vaam_khanegi/services/systemClock.dart';
+import 'package:shamsi_date/shamsi_date.dart';
 
 import '../service_locator.dart';
 
@@ -19,6 +21,14 @@ class InstallmentPageViewModel extends BaseViewModel {
   List<Installment> installments1 = [];
   List<DateTime> dueDates = [];
   List<CreateLoan> loans = [];
+  Color _color = Colors.grey.shade400;
+
+  setColor(Color color) {
+    _color = color;
+    notifyListeners();
+  }
+
+  Color get color => _color;
 
   Future getInstallments() async {
     await firestoreService.getLoansFromDB();
@@ -44,5 +54,13 @@ class InstallmentPageViewModel extends BaseViewModel {
     );
 
     await firestoreService.addDeposite(deposit);
+  }
+
+  String formatShamsiDate(DateTime dateTime) {
+    Jalali jalali = Jalali.fromDateTime(dateTime);
+    JalaliFormatter jalaliFormatter = jalali.formatter;
+    String formatDate =
+        '${jalaliFormatter.wN} , ${jalaliFormatter.d} ${jalaliFormatter.mN} ${jalaliFormatter.yyyy}';
+    return formatDate;
   }
 }

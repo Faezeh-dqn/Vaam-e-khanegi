@@ -12,6 +12,7 @@ import 'package:vaam_khanegi/viewmodels/createLoan_page_viewmodel.dart';
 import 'package:vaam_khanegi/viewmodels/installments_page_viewmodel.dart';
 import 'package:vaam_khanegi/viewmodels/member_page_viewmodel.dart';
 import 'package:vaam_khanegi/viewmodels/menu_page_viewmodel.dart';
+import 'package:vaam_khanegi/viewmodels/profile_page_viewmodel.dart';
 import 'package:vaam_khanegi/viewmodels/sign_up_page_viewmodel.dart';
 import 'package:vaam_khanegi/viewmodels/loan_page_viewModel.dart';
 import 'package:vaam_khanegi/viewmodels/deposit_page_viewModel.dart';
@@ -86,6 +87,12 @@ setUpGetIt() {
 
   getIt.registerFactory(
     () => MemberPageViewModel(
+      firestoreService: getIt<FirestoreService>(),
+      firebaseStorageService: getIt<FirebaseStorageService>(),
+    ),
+  );
+  getIt.registerFactory(
+    () => ProfilePageViewModel(
       firestoreService: getIt<FirestoreService>(),
       firebaseStorageService: getIt<FirebaseStorageService>(),
     ),

@@ -24,9 +24,9 @@ class MemberPage extends StatelessWidget {
                         height: 10,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 270, top: 23),
+                        padding: EdgeInsets.only(left: 160, top: 23),
                         child: Text(
-                          'اعضا ',
+                          'اعضا صندوق ',
                           style: TextStyle(
                               fontSize: 40, fontWeight: FontWeight.w800),
                         ),
@@ -47,32 +47,23 @@ class MemberPage extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Text(
-                                    '${model.members[index].firstName}   ${model.members[index].lastName}',
-                                    style: TextStyle(
-                                        fontSize: 21,
-                                        fontWeight: FontWeight.bold),
-                                  ),
                                   Padding(
-                                    padding: EdgeInsets.only(right: 10),
-                                    child: ClipOval(
-                                      child: SizedBox(
-                                          width: 100,
-                                          height: 100,
-                                          child: model.imagePath == null
-                                              ? GestureDetector(
-                                                  child: Image.asset(
-                                                      'images/no_pic.png'),
-                                                  onTap: () {
-                                                    // model.uploadPic();
-                                                    print('oops');
-                                                  },
-                                                )
-                                              : Image.network(model.imagePath)),
+                                    padding: EdgeInsets.only(left: 20),
+                                    child: Text(
+                                      '${model.members[index].firstName}   ${model.members[index].lastName}',
+                                      style: TextStyle(
+                                          fontSize: 21,
+                                          fontWeight: FontWeight.bold),
                                     ),
+                                  ),
+                                  ClipOval(
+                                    child: SizedBox(
+                                        width: 100,
+                                        height: 100,
+                                        child: model.imagePath == null
+                                            ? Image.asset('images/no_pic.png')
+                                            : Image.network(
+                                                model.imagesPath[index])),
                                   ),
                                 ],
                               ),

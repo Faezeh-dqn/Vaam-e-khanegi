@@ -56,7 +56,8 @@ class DepositPage extends StatelessWidget {
                                       style: TextStyle(fontSize: 20),
                                     ),
                                     Text(
-                                      model.deposits[index].date.toString(),
+                                      model.formatShamsiDate(
+                                          model.deposits[index].date),
                                       style: TextStyle(fontSize: 20),
                                     ),
                                   ],

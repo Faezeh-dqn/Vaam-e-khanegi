@@ -13,9 +13,13 @@ import 'package:vaam_khanegi/services/global_state.dart';
 import 'package:flutter/material.dart';
 
 class MemberPageViewModel extends BaseViewModel {
-  List members = [];
+  List<User> members = [];
+
+  List<String> imagesPath = [];
+
   String imagePath;
-  User retrivedUser;
+
+  User _checkUser;
   FirestoreService firestoreService;
   FirebaseStorageService firebaseStorageService;
   MemberPageViewModel(
@@ -25,7 +29,18 @@ class MemberPageViewModel extends BaseViewModel {
     members = await firestoreService.getMembers();
 
     setBusy(false);
+    members.forEach((element) {
+      imagesPath.add(element.image);
+    });
+    return null;
   }
+
+  setCheckUser(User checkUser) {
+    _checkUser = checkUser;
+    notifyListeners();
+  }
+
+  User get checkUser => _checkUser;
 
   loan() {
     GlobalState globalState = getIt<GlobalState>();
@@ -33,9 +48,7 @@ class MemberPageViewModel extends BaseViewModel {
     globalState.loans = fetchedLoans;
   }
 
-  List loans = getIt<GlobalState>().loans;
-
-  uploadPic() async {
+  uploadPic(User retrivedUser) async {
     File imageFile;
     var image = await ImagePicker().getImage(source: ImageSource.gallery);
     if (image != null) {
@@ -43,9 +56,11 @@ class MemberPageViewModel extends BaseViewModel {
       String result = await firebaseStorageService.uploadPic(imageFile);
       if (result != null) {
         imagePath = result;
+
         User updatedUSeresheha = retrivedUser.copyWith(
           image: imagePath,
         );
+
         await firestoreService.updateUser(updatedUSeresheha);
       }
     }

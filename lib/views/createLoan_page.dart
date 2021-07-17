@@ -164,6 +164,7 @@ class _CreateLoanPageState extends State<CreateLoanPage> {
                                     message: 'وام با موفقیت ثبت شد ',
                                   ),
                                 );
+                                await Get.to(() => MenuPage());
                               },
                             ),
                           ),

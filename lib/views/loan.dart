@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:stacked/stacked.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-import 'package:vaam_khanegi/models/loan.dart';
+
 import 'package:vaam_khanegi/viewmodels/loan_page_viewModel.dart';
-import 'package:persian_fonts/persian_fonts.dart';
+
 import 'package:vaam_khanegi/views/menu_page.dart';
 import '../service_locator.dart';
 
@@ -60,7 +60,7 @@ class _LoanPageState extends State<LoanPage> {
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    onPressed: () {
+                                    onPressed: () async {
                                       showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
@@ -127,9 +127,14 @@ class _LoanPageState extends State<LoanPage> {
                                                                   ),
                                                                 ),
                                                                 children: [
-                                                                  Text(model
-                                                                      .nameOfWinners
-                                                                      .toString())
+                                                                  Text(
+                                                                    model
+                                                                        .nameOfWinners
+                                                                        .toString(),
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            20),
+                                                                  ),
                                                                 ],
                                                               );
                                                             },
@@ -283,10 +288,7 @@ class _LoanPageState extends State<LoanPage> {
                                                                 ),
                                                                 TextButton(
                                                                   onPressed:
-                                                                      () {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  },
+                                                                      () {},
                                                                   child: Text(
                                                                     'خیر',
                                                                     style: TextStyle(
@@ -303,6 +305,20 @@ class _LoanPageState extends State<LoanPage> {
                                                                 TextButton(
                                                                   onPressed:
                                                                       () async {
+                                                                    if (model
+                                                                        .retrivedLoans
+                                                                        .contains(model
+                                                                            .userfirst
+                                                                            .id)) {
+                                                                      showTopSnackBar(
+                                                                        context,
+                                                                        CustomSnackBar
+                                                                            .error(
+                                                                          message:
+                                                                              'در هر وام فقط یک بار میتوانید عضو شوید',
+                                                                        ),
+                                                                      );
+                                                                    }
                                                                     if (model
                                                                             .retrivedLoans[
                                                                                 index]
