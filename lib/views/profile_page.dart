@@ -43,7 +43,7 @@ class ProfilePage extends StatelessWidget {
                         child: SizedBox(
                             width: 150,
                             height: 150,
-                            child: model.imagePath == null
+                            child: model.imagePath == ''
                                 ? Image.asset('images/no_pic.png')
                                 : Image.network(model.imagePath)),
                       ),
@@ -119,7 +119,7 @@ class ProfilePage extends StatelessWidget {
                                 width: 255,
                                 child: TextField(
                                   controller: TextEditingController(
-                                      text: model.retrivedUser.lastName),
+                                      text: model.lastName),
                                   onChanged: (value) {
                                     model.lastName = value;
                                   },
@@ -199,17 +199,9 @@ class ProfilePage extends StatelessWidget {
                             child: RaisedButton(
                               elevation: 0,
                               color: Color(0xffB7006E),
-                              onPressed: () async {
-                                await model.updateUser();
-
-                                showTopSnackBar(
-                                  context,
-                                  CustomSnackBar.success(
-                                    message: 'اطلاعات شما با موفقیت ثبت شد',
-                                  ),
-                                );
-
-                                await Get.to(() => MenuPage());
+                              onPressed: ()  {
+                               
+                                 Get.to(() => MenuPage());
                               },
                               child: Text(
                                 'بازگشت',
@@ -228,8 +220,8 @@ class ProfilePage extends StatelessWidget {
                               color: Colors.green,
                               onPressed: () async {
                                 await model.updateUser();
-                                // ignore: await_only_futures
-                                await showTopSnackBar(
+                               
+                                 showTopSnackBar(
                                   context,
                                   CustomSnackBar.success(
                                     message: 'اطلاعات شما با موفقیت ثبت شد',

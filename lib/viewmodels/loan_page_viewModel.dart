@@ -34,6 +34,7 @@ class LoanPageViewModel extends BaseViewModel {
     setBusy(true);
     userfirst = await firestoreService.retrivedUser();
 
+    setBusy(false);
     notifyListeners();
   }
 
@@ -57,6 +58,7 @@ class LoanPageViewModel extends BaseViewModel {
     User user = await firestoreService.retrivedUser();
     if (loan.joinedMemberId.isEmpty) {
       loan.joinedMemberId.add(user.id);
+      retrivedFullName.add(user.firstName + ' ' + user.lastName);
     } else if (loan.joinedMemberId.contains(user.id) == false) {
       loan.joinedMemberId.add(user.id);
       print(loan.joinedMemberId.length);
@@ -137,7 +139,8 @@ class LoanPageViewModel extends BaseViewModel {
     for (var i = 0; i < loan.joinedMemberId.length; i++) {
       String userId = loan.joinedMemberId[i];
       for (int j = 1; j <= int.parse(loan.requierdMembers); j++) {
-        int days = j * 29;
+        int days = j * 30;
+
         Installment installment = Installment(
           id: getIt<SystemClock>()
               .getCurrentTime()

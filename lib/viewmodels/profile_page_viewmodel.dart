@@ -35,8 +35,8 @@ class ProfilePageViewModel extends BaseViewModel {
 
   Future updateUser() async {
     User user = User(
-      firstName: retrivedUser.firstName,
-      lastName: retrivedUser.lastName,
+      firstName: firstName,
+      lastName: lastName,
       email: retrivedUser.email,
       image: imagePath,
       role: retrivedUser.role,

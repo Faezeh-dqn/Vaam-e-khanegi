@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:stacked/stacked.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:vaam_khanegi/services/systemClock.dart';
 import 'package:vaam_khanegi/viewmodels/installments_page_viewmodel.dart';
 import 'package:vaam_khanegi/views/menu_page.dart';
 
@@ -158,24 +159,39 @@ class InstallmentsPage extends StatelessWidget {
                                                   ),
                                                 ),
                                                 onPressed: () async {
-                                                  await model.updateStatus(
-                                                      'پرداخت شد',
-                                                      model.installments1[
-                                                          index]);
+                                                  if (getIt<SystemClock>()
+                                                      .getCurrentTime()
+                                                      .isAfter(model
+                                                          .installments1[index]
+                                                          .dueDate)) {
+                                                    await model.updateStatus(
+                                                        'پرداخت شد',
+                                                        model.installments1[
+                                                            index]);
 
-                                                  // await model.getInstallments();
-                                                  await model.setColor(
-                                                      Colors.grey.shade400);
+                                                    await model
+                                                        .getInstallments();
+                                                    await model.setColor(
+                                                        Colors.grey.shade400);
 
-                                                  showTopSnackBar(
-                                                    context,
-                                                    CustomSnackBar.success(
-                                                      message:
-                                                          'قسط با موفقیت پرداخت شد ',
-                                                    ),
-                                                  );
+                                                    showTopSnackBar(
+                                                      context,
+                                                      CustomSnackBar.success(
+                                                        message:
+                                                            'قسط با موفقیت پرداخت شد ',
+                                                      ),
+                                                    );
 
-                                                  Navigator.pop(context);
+                                                    Navigator.pop(context);
+                                                  } else {
+                                                    showTopSnackBar(
+                                                      context,
+                                                      CustomSnackBar.error(
+                                                        message:
+                                                            'زمان پرداخت این قسط فرا نرسیده',
+                                                      ),
+                                                    );
+                                                  }
                                                 },
                                               )
                                             ],

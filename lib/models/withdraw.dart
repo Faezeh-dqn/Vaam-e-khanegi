@@ -6,22 +6,25 @@ class Withdraw {
   String loanId;
   String id;
   String amount;
-
+  String status;
   String name;
 
   Withdraw(
       {@required this.amount,
       @required this.id,
       @required this.loanId,
-      @required this.name});
+      @required this.name,
+      @required this.status});
 
   Withdraw copyWith({
     String loanId,
     String id,
     String amount,
     String name,
+    String status,
   }) {
     return Withdraw(
+      status: status ?? this.status,
       loanId: loanId ?? this.loanId,
       id: id ?? this.id,
       amount: amount ?? this.amount,
@@ -31,6 +34,7 @@ class Withdraw {
 
   Map<String, dynamic> toMap() {
     return {
+      'status': status,
       'loanId': loanId,
       'id': id,
       'amount': amount,
@@ -40,6 +44,7 @@ class Withdraw {
 
   factory Withdraw.fromMap(Map<String, dynamic> map) {
     return Withdraw(
+      status: map['status'],
       loanId: map['loanId'],
       id: map['id'],
       amount: map['amount'],
@@ -47,14 +52,9 @@ class Withdraw {
     );
   }
 
-  String toJson() => json.encode(toMap());
-
-  factory Withdraw.fromJson(String source) =>
-      Withdraw.fromMap(json.decode(source));
-
   @override
   String toString() {
-    return 'Withdraw(loanId: $loanId, id: $id, amount: $amount,  name: $name)';
+    return 'Withdraw(status : $status,loanId: $loanId, id: $id, amount: $amount,  name: $name)';
   }
 
   @override
@@ -64,12 +64,17 @@ class Withdraw {
     return other is Withdraw &&
         other.loanId == loanId &&
         other.id == id &&
+        other.status == status &&
         other.amount == amount &&
         other.name == name;
   }
 
   @override
   int get hashCode {
-    return loanId.hashCode ^ id.hashCode ^ amount.hashCode ^ name.hashCode;
+    return loanId.hashCode ^
+        id.hashCode ^
+        amount.hashCode ^
+        name.hashCode ^
+        status.hashCode;
   }
 }

@@ -13,7 +13,7 @@ import 'package:vaam_khanegi/services/global_state.dart';
 import 'package:flutter/material.dart';
 
 class MemberPageViewModel extends BaseViewModel {
-  List<User> members = [];
+  List members = [];
 
   List<String> imagesPath = [];
 

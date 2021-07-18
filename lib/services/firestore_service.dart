@@ -96,6 +96,23 @@ class FirestoreService {
         .set(updatedLoan.toMap());
   }
 
+  Future updateWithdrawStatus(Withdraw withdraw, String status) async {
+    String currentUserId = authenticationService.firebaseAuth.currentUser.uid;
+    DocumentSnapshot documentSnapshot = await fireStore
+        .collection(userCollection)
+        .doc(currentUserId)
+        .collection(withdrawCollection)
+        .doc(withdraw.id)
+        .get();
+
+    Withdraw retrivedWithdraw = Withdraw.fromMap(documentSnapshot.data());
+    Withdraw updatedWithdraw = retrivedWithdraw.copyWith(status: status);
+    await fireStore
+        .collection(createLoanCollection)
+        .doc(withdraw.id)
+        .set(updatedWithdraw.toMap());
+  }
+
   Future getUSerById(String id) async {
     DocumentSnapshot documentSnapshot =
         await fireStore.collection(userCollection).doc(id).get();

@@ -10,6 +10,7 @@ import 'package:vaam_khanegi/services/systemClock.dart';
 import '../service_locator.dart';
 
 class WithdrawPageViewModel extends BaseViewModel {
+  bool success = false;
   List<CreateLoan> retrivedLoans = [];
   List<Withdraw> withdraws = [];
   FirestoreService firestoreService;
@@ -18,9 +19,17 @@ class WithdrawPageViewModel extends BaseViewModel {
       {@required this.firestoreService, @required this.globalState});
   List<CreateLoan> loansFromGlobalState = [];
   List date = [];
-  DateTime dateTime;
+  // DateTime dateTime;
   List<DateTime> _dateTimes = [];
   List<CreateLoan> _seperatedLoans = [];
+  Color _color = Colors.amberAccent.shade400;
+
+  setColor(Color color) {
+    _color = color;
+    notifyListeners();
+  }
+
+  Color get color => _color;
 
   getLoansFromGlobalState() {
     loansFromGlobalState = globalState.loans;
@@ -46,11 +55,11 @@ class WithdrawPageViewModel extends BaseViewModel {
     createLoan.forEach(
       (element) async {
         Withdraw withdraw = Withdraw(
-          amount: element.amount,
-          id: DateTime.now().millisecondsSinceEpoch.toString(),
-          loanId: element.id,
-          name: element.name,
-        );
+            amount: element.amount,
+            id: DateTime.now().millisecondsSinceEpoch.toString(),
+            loanId: element.id,
+            name: element.name,
+            status: 'پرداخت شده');
         await firestoreService.addWithdraw(withdraw);
       },
     );

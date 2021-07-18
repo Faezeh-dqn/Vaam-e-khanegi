@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stacked/stacked.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:vaam_khanegi/viewmodels/withdraw_page_viewmodel.dart';
 import 'package:vaam_khanegi/views/menu_page.dart';
 
@@ -15,14 +17,41 @@ class WithDrawPage extends StatelessWidget {
         builder: (context, model, child) => Scaffold(
               body: (model.retrivedLoans.isEmpty)
                   ? Center(
-                      child: Text(
-                        'زمان برداشت وام شما فرا نرسیده',
-                        style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.grey.shade600),
-                      ),
-                    )
+                      child: Column(
+                      children: [
+                        SizedBox(
+                          height: 350,
+                        ),
+                        Text(
+                          'زمان برداشت وام شما فرا نرسیده',
+                          style: TextStyle(
+                              fontSize: 23,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey.shade600),
+                        ),
+                        SizedBox(
+                          height: 250,
+                        ),
+                        Container(
+                          height: 50,
+                          width: 150,
+                          child: RaisedButton(
+                            elevation: 0,
+                            color: Colors.amberAccent.shade200,
+                            onPressed: () {
+                              Get.to(() => MenuPage());
+                            },
+                            child: Text(
+                              'بازگشت',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ))
                   : Center(
                       child: Column(
                         children: [
@@ -81,20 +110,6 @@ class WithDrawPage extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      RaisedButton(
-                                        onPressed: () async {
-                                          await model.addWithdrawsToDB(
-                                              model.retrivedLoans);
-                                        },
-                                        color: Colors.amberAccent.shade400,
-                                        child: Text(
-                                          'برداشت',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
                                       Text(
                                         model.retrivedLoans[index].name,
                                         style: TextStyle(fontSize: 20),

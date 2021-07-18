@@ -60,7 +60,7 @@ class MemberPage extends StatelessWidget {
                                     child: SizedBox(
                                         width: 100,
                                         height: 100,
-                                        child: model.imagePath == null
+                                        child: model.members[index].image == ''
                                             ? Image.asset('images/no_pic.png')
                                             : Image.network(
                                                 model.imagesPath[index])),
