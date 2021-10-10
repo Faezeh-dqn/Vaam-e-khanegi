@@ -31,9 +31,9 @@ class WithdrawPageViewModel extends BaseViewModel {
 
   Color get color => _color;
 
-  getLoansFromGlobalState() {
-    loansFromGlobalState = globalState.loans;
-
+  getLoansFromGlobalState() async {
+    globalState.loans.clear();
+    loansFromGlobalState = await firestoreService.getLoansFromDB();
     notifyListeners();
   }
 
@@ -67,6 +67,7 @@ class WithdrawPageViewModel extends BaseViewModel {
 
   Future findUserLoans() async {
     setBusy(true);
+
     await getLoansFromGlobalState();
     User user = await firestoreService.retrivedUser();
     setBusy(false);
@@ -81,6 +82,7 @@ class WithdrawPageViewModel extends BaseViewModel {
         }
       },
     );
+    print(seperatedLoans);
 
     notifyListeners();
 

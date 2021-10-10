@@ -20,11 +20,6 @@ class ChosenLoanPageViewModel extends BaseViewModel {
   DateTime dateTime;
   List<DateTime> _dateTimes = [];
   List<CreateLoan> _seperatedLoans = [];
-  getLoansFromGlobalState() {
-    loans = globalState.loans;
-
-    notifyListeners();
-  }
 
   setDateTimes(List<DateTime> dateTimes) {
     _dateTimes = dateTimes;
@@ -42,7 +37,8 @@ class ChosenLoanPageViewModel extends BaseViewModel {
 
   Future findUserLoans() async {
     setBusy(true);
-    await getLoansFromGlobalState();
+    globalState.loans.clear();
+    loans = await firestoreService.getLoansFromDB();
     User user = await firestoreService.retrivedUser();
     setBusy(false);
     String id = user.id;

@@ -130,7 +130,10 @@ class WithDrawPage extends StatelessWidget {
                               child: RaisedButton(
                                 elevation: 0,
                                 color: Colors.amberAccent.shade200,
-                                onPressed: () {
+                                onPressed: () async {
+                                  await model
+                                      .addWithdrawsToDB(model.retrivedLoans);
+
                                   Get.to(() => MenuPage());
                                 },
                                 child: Text(
